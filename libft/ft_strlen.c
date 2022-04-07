@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/06 17:46:05 by ikarjala         ###   ########.fr       */
+/*   Created: 2021/11/05 17:12:43 by ikarjala          #+#    #+#             */
+/*   Updated: 2021/12/17 18:31:14 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-int	parse(int fd)
+size_t	ft_strlen(const char *s)
 {
-	const char	*ct_fr = {'.', '#', '\n'};
-	const int	*ct_to = {0, 1, 0};
-	char		buf[BUFF_SIZE + 1];
-	ssize_t		rbytes;
-	t_uint		i;
+	size_t	len;
 
-	rbytes = 1;
-	while (rbytes > 0)
-	{
-		rbytes = read(fd, buf, BUFF_SIZE);
-		if (rbytes < 0)
-			return (XC_ERROR);
-		buf[rbytes] = 0;
-		while (i < BUFF_SIZE)
-		{
-		}
-	}
+	len = 0;
+	while (*s++ != '\0')
+		len++;
+	return (len);
 }

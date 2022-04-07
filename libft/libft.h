@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 17:06:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/03 11:15:30 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:33:10 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define FT_TRUE	1
 # define FT_FALSE	0
 
-typedef unsigned char		t_bool;
+typedef unsigned char	t_bool;
 typedef unsigned char	t_byte;
 typedef signed char		t_sbyte;
 typedef unsigned int	t_uint;

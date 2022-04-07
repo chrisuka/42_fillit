@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/06 17:46:05 by ikarjala         ###   ########.fr       */
+/*   Created: 2022/03/25 19:05:20 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/03/29 18:08:39 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-int	parse(int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	const char	*ct_fr = {'.', '#', '\n'};
-	const int	*ct_to = {0, 1, 0};
-	char		buf[BUFF_SIZE + 1];
-	ssize_t		rbytes;
-	t_uint		i;
+	int		pow;
+	int		div;
+	t_bool	ltz;
 
-	rbytes = 1;
-	while (rbytes > 0)
+	ltz = n < 0;
+	write(fd, "-", ltz);
+	pow = ft_log10(n);
+	div = ft_pow(10, pow) * (1 | -ltz);
+	while (pow-- >= 0)
 	{
-		rbytes = read(fd, buf, BUFF_SIZE);
-		if (rbytes < 0)
-			return (XC_ERROR);
-		buf[rbytes] = 0;
-		while (i < BUFF_SIZE)
-		{
-		}
+		ft_putchar_fd((char)(n / div % 10 + '0'), fd);
+		div /= 10;
 	}
 }

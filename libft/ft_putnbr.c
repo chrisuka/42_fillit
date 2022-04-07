@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/06 17:46:05 by ikarjala         ###   ########.fr       */
+/*   Created: 2021/11/16 17:38:13 by ikarjala          #+#    #+#             */
+/*   Updated: 2021/11/16 17:38:56 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-int	parse(int fd)
+void	ft_putnbr(int n)
 {
-	const char	*ct_fr = {'.', '#', '\n'};
-	const int	*ct_to = {0, 1, 0};
-	char		buf[BUFF_SIZE + 1];
-	ssize_t		rbytes;
-	t_uint		i;
-
-	rbytes = 1;
-	while (rbytes > 0)
-	{
-		rbytes = read(fd, buf, BUFF_SIZE);
-		if (rbytes < 0)
-			return (XC_ERROR);
-		buf[rbytes] = 0;
-		while (i < BUFF_SIZE)
-		{
-		}
-	}
+	ft_putnbr_fd(n, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/05 19:03:24 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:32:46 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@
 # define XC_ERROR	-1
 # define XC_EXIT	0
 
+# define BUFF_SIZE	21
+
 /* PRINTER */
 int		display_error(void);
 int		display_usage(void);
 
 /* PARSER */
-void	parse(void);
+int		parse(int fd);
 
 #endif

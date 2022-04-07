@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/04/05 19:43:11 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/04/06 17:32:16 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC_DIR		= $(ROOT)src/
 OBJ_DIR		= $(ROOT)
 SRC			= $(addprefix $(SRC_DIR),$(addsuffix .c,$(CFUNC)))
 OBJ			= $(addprefix $(OBJ_DIR),$(addsuffix .o,$(CFUNC)))
-INC_DIR		= $(SRC_DIR)
+INC_DIR		= $(SRC_DIR) $(LIB_DIR)/
 LIB_DIR		= $(ROOT)libft
 LIB			= ft
 LIBS		= $(addprefix lib,$(addsuffix .a,$(LIB)))
@@ -38,7 +38,7 @@ $(NAME): lib
 	$(CC) -c $(CFLAGS) $(SRC) -I $(INC_DIR)
 	$(CC) -o $(BIN) $(OBJ) -L$(LIB_DIR) -l $(LIB)
 
-	@echo	'$(BMSG_FIN)'
+	@echo	$(BMSG_FIN)
 lib:
 ifeq (,$(wildcard $(addprefix $(LIB_DIR),$(LIB))))
 	@echo '\_,-->' $(BMSG_LIB)
@@ -67,4 +67,4 @@ COL_NUL		= \e[0;0m
 ##	UTILS ====
 CMD_NORME	= norminette -R CheckForbiddenSourceHeader
 norme:
-	$(CMD_NORME) $(SRC_DIR)*.c $(INC_DIR)*.h
+	$(CMD_NORME) $(SRC_DIR)*.c $(LIB_DIR)/*.c $(addsuffix *.h,$(INC_DIR))
