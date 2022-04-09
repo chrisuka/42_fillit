@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:26:23 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/05 18:42:17 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:55:53 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	display_error(void)
 {
-	ft_putendl_fd("error", FD_ERR);
+	ft_putendl_fd("error", FD_OUT);
 	return (XC_ERROR);
 }
 

@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/04/06 17:32:16 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/04/07 17:40:19 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,8 @@ CC			= clang
 all: $(NAME)
 $(NAME): lib
 	@echo	$(BMSG_BIN)
-
 	$(CC) -c $(CFLAGS) $(SRC) -I $(INC_DIR)
 	$(CC) -o $(BIN) $(OBJ) -L$(LIB_DIR) -l $(LIB)
-
 	@echo	$(BMSG_FIN)
 lib:
 ifeq (,$(wildcard $(addprefix $(LIB_DIR),$(LIB))))
