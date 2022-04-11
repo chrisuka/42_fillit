@@ -6,7 +6,7 @@
 /*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/04/07 15:06:52 by staskine         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:40:03 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,28 @@ static int	edit_str(char *str)
 static int check_connections(char *str)
 {
 	int i;
+	int	counter;
 
 	i = 0;
+	counter = 0;
 	while (str)
 	{
-		
+		if (i != 0 && (i % 5) != 0)
+		{
+			if (str[i - 1] == 1)
+				counter++;
+		}
+		if (i > 5 && str[i - 5] == 1)
+			counter++;
+		if (i < 16 && str[i + 5] == 1)
+			counter++;
+		if ((i % 4) != 0 && str[i + 1] == 1)
+			counter++;
+		i++;
 	}
+	if (counter => 6)
+		return (0);
+	return (XC_ERROR);
 }
 
 int	check_input(char *str)
