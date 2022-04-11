@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/06 17:32:46 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:41:07 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@
 
 # define BUFF_SIZE	21
 
+typedef unsigned long long	t_int64b;
+typedef struct s_tetrimino
+{
+	t_int64b	code;
+}	t_tet;
+
 /* PRINTER */
 int		display_error(void);
 int		display_usage(void);
 
 /* PARSER */
-int		parse(int fd);
+int		parse(int fd, t_tet *tetris);
 
 #endif
