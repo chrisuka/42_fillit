@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 21:41:40 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:43:42 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,30 @@ static int	tet_isvalid(t_tet shape)
 int	parse(int fd, t_tet *tetris)
 {
 	char		buf[BUFF_SIZE + 1];
-	ssize_t		rbytes;
-	t_uint		tetc;
+	ssize_t		r_len;
+	t_uint		tet_c;
 	t_uint		blocks;
 	t_uint		i;
 
-	tetc = 0;
-	rbytes = 1;
-	while (rbytes > 0)
+	tet_c = 0;
+	r_len = 1;
+	while (r_len > 0)
 	{
-		rbytes = read(fd, buf, BUFF_SIZE);
-		if (rbytes < BUFF_SIZE - 1)
+		r_len = read(fd, buf, BUFF_SIZE);
+		if (r_len < BUFF_SIZE - 1)
 			return (XC_ERROR);
-		buf[rbytes] = 0;
+		buf[r_len] = 0;
 		blocks = 0;
 		i = 0;
-		tetris[tetc].code = 0;
-		while (i < rbytes)
+		tetris[tet_c].code = 0;
+		while (i < r_len)
 		{
 			if (buf[i] == '#')
-				tetris[tetc].code = (1 << i) | tetris[tetc].code;
+				tetris[tet_c].code = (1 << i) | tetris[tet_c].code;
 		}
-		if (blocks != 4 || !tet_isvalid(tetris[tetc]))
+		if (blocks != 4 || !tet_isvalid(tetris[tet_c]))
 			return (XC_ERROR);
-		tetc++;
+		tet_c++;
 	}
 	return (XC_EXIT);
 }
