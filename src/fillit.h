@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 21:41:07 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/12 20:14:28 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FILLIT_H
 
 # include <fcntl.h>
+# include <stdint.h>
 # include "libft.h"
 
 # define FD_IN	0
@@ -25,10 +26,9 @@
 
 # define BUFF_SIZE	21
 
-typedef unsigned long long	t_int64b;
 typedef struct s_tetrimino
 {
-	t_int64b	code;
+	uint64_t	bits;
 }	t_tet;
 
 /* PRINTER */
