@@ -1,102 +1,108 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checking_p2.c                                      :+:      :+:    :+:   */
+/*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/04/11 12:40:03 by staskine         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:28:56 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
+# define XC_ERROR	-1
 
-/* str - p should give the place of the new line character.
-could be used to check if the length of the lines is correct.
-The values should be 5, 10, 15, 20 */
+/* this one just counts the  amount of different
+characters and checks for
+invalid ones. I added checking the newline
+positions to this like how we discussed */
 
-static int	find_nl(char *str)
-{
-	int	findIndex;
-	int i;
-	char *p;
-
-	findIndex = 0;
-	i = 0;
-	while (str)
-	{
-		p = ft_strchr(&str[i + 1], '\n');
-		findIndex = str - p;
-		if ((findIndex % 5) != 0)
-			return (XC_ERROR);
-		i = findIndex;
-		findIndex = 0;
-	}
-	return (0);
-}
-
-/* this one just counts the  amount of different characters and checks for
-invalid ones */
-
-static int	edit_str(char *str)
+static int	input_check(char *str)
 {
 	int	i;
-	int	counter;
-	int	counter_2;
+	int	h_tag;
+	int	n_l;
 
 	i = 0;
-	counter = 0;
-	counter_2 = 0;
-	while (str)
+	h_tag = 0;
+	n_l = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] == '#')
-			counter++;
-		if (str[i] == '\n')
-			counter_2++;
-		if (str[i] != '.' && str[i] != '#' && str[i] == '\n')
+			h_tag++;
+		else if (str[i] == '\n')
+		{
+			if (((i + 1) % 5) == 0 || i == 20)
+				n_l++;
+		}
+		else if (str[i] != '.')
 			return (XC_ERROR);
+		i++;
 	}
-	if (counter == 4 && (counter_2 == 4 || counter_2 == 5))
+	if (h_tag >= 3 && (n_l == 5))
 		return (0);
 	return (XC_ERROR);
 }
+
+/* this is for checking each connection.
+It works with the logic that the three first 
+hashtags need to have another one either next 
+to them or under them for it to be a valid tetrimino*/
 
 static int check_connections(char *str)
 {
 	int i;
-	int	counter;
+	int	h_tag;
 
 	i = 0;
-	counter = 0;
-	while (str)
+	h_tag = 0;
+	while (str[i] != '\0')
 	{
-		if (i != 0 && (i % 5) != 0)
+		if (str[i] == '#')
 		{
-			if (str[i - 1] == 1)
-				counter++;
+			if (str[i + 1] == '#')
+				h_tag++;
+			if (str[i + 5] == '#')
+				h_tag++;
 		}
-		if (i > 5 && str[i - 5] == 1)
-			counter++;
-		if (i < 16 && str[i + 5] == 1)
-			counter++;
-		if ((i % 4) != 0 && str[i + 1] == 1)
-			counter++;
 		i++;
 	}
-	if (counter => 6)
+	if (h_tag >= 3)
 		return (0);
 	return (XC_ERROR);
 }
 
-int	check_input(char *str)
+/*This main is purely for testing purposes of 
+these two functions :) */
+int main(void)
 {
-	int check;
+	int ret;
+	char buf[22];
+	int result;
+	int fd;
 
-	check = edit_str(str);
-	if (check != 0)
-		return (XC_ERROR);
-	check = find_nl(str);
-	if (check != 0)
-		return (XC_ERROR);
+	fd = open("test.txt", O_RDONLY);
+	ret = read(fd, buf, 21);
+	while (ret > 0)
+	{
+		buf[ret] = '\0';
+		printf("\n%s\n", buf);
+		result = input_check(buf);
+		if (result == -1)
+			printf("This is an invalid string\n");
+		else
+		{
+			result = check_connections(buf);
+			if (result == -1)
+				printf("This is an invalid string\n");
+			else
+				printf("This is a valid string\n");
+		}
+		ret = read(fd, buf, 21);
+	}
+	close(fd);
+	return (0);
 }
