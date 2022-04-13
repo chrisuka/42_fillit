@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/13 18:49:47 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:21:04 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_tet	to_bitstr64(const char *buf, ssize_t r_len)
 
 static int	check_connections(char *str)
 {
-	int	i;
+	int i;
 	int	links;
 
 	i = 0;
