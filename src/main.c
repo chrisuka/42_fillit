@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:19:50 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 21:54:18 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:46:27 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_tet	tetris[26];
+	t_m4x16	map[16];
 	int		fd;
 
 	if (argc != 2)

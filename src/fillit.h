@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/13 17:57:31 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:44:54 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define BUFF_SIZE	21
 
+typedef unsigned long long	t_m4x16;
 typedef struct s_tetrimino
 {
 	uint64_t	bits;
