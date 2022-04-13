@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/13 17:57:31 by ikarjala         ###   ########.fr       */
+/*   Created: 2022/04/12 20:33:57 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/04/12 20:34:43 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "fillit.h"
 
-# include <fcntl.h>
-# include <stdint.h>
-# include "libft.h"
-
-# define FD_IN	0
-# define FD_OUT	1
-# define FD_ERR	2
-
-# define XC_ERROR	-1
-# define XC_EXIT	0
-
-# define BUFF_SIZE	21
-
-typedef struct s_tetrimino
+int	solve(uint64_t *map)
 {
-	uint64_t	bits;
-}	t_tet;
-
-/* PRINTER */
-int		display_error(void);
-int		display_usage(void);
-
-/* PARSER */
-int		parse(int fd, t_tet *tetris);
-
-#endif
+	
+}
