@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_check.c                                      :+:      :+:    :+:   */
+/*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/04/12 14:28:56 by staskine         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:28:03 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-# define XC_ERROR	-1
+#include "fillit.h"
 
 /* this one just counts the  amount of different
 characters and checks for
@@ -42,8 +39,8 @@ static int	input_check(char *str)
 			return (XC_ERROR);
 		i++;
 	}
-	if (h_tag >= 3 && (n_l == 5))
-		return (0);
+	if (h_tag == 4 && (n_l == 5 || n_l == 4))
+		return (XC_EXIT);
 	return (XC_ERROR);
 }
 
@@ -55,28 +52,31 @@ to them or under them for it to be a valid tetrimino*/
 static int check_connections(char *str)
 {
 	int i;
-	int	h_tag;
+	int	links;
 
 	i = 0;
-	h_tag = 0;
+	links = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '#')
 		{
 			if (str[i + 1] == '#')
-				h_tag++;
+				links++;
 			if (str[i + 5] == '#')
-				h_tag++;
+				links++;
 		}
 		i++;
 	}
-	if (h_tag >= 3)
-		return (0);
-	return (XC_ERROR);
+	if (links < 3)
+		return (XC_ERROR);
+	return (XC_EXIT);
 }
+
 
 /*This main is purely for testing purposes of 
 these two functions :) */
+
+/*
 int main(void)
 {
 	int ret;
@@ -106,3 +106,4 @@ int main(void)
 	close(fd);
 	return (0);
 }
+*/
