@@ -6,13 +6,13 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/13 18:01:47 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:21:04 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static t_bool	tet_allowed(t_tet shape)
+static int	tet_allowed(t_tet shape)
 {
 	t_uint			index;
 	const uint64_t	v_tetris[19] = {
@@ -44,6 +44,56 @@ static t_tet	to_bitstr64(const char *buf, ssize_t r_len)
 			ret.bits = (1 << i) | ret.bits;
 	}
 	return (ret);
+}
+
+static int	check_connections(char *str)
+{
+	int i;
+	int	links;
+
+	i = 0;
+	links = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '#')
+		{
+			if (str[i + 1] == '#')
+				links++;
+			if (str[i + 5] == '#')
+				links++;
+		}
+		i++;
+	}
+	if (links < 3)
+		return (FT_FALSE);
+	return (FT_TRUE);
+}
+
+static int	check_format(char *str)
+{
+	int	i;
+	int	h_tag;
+	int	n_l;
+
+	i = 0;
+	h_tag = 0;
+	n_l = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '#')
+			h_tag++;
+		else if (str[i] == '\n')
+		{
+			if (((i + 1) % 5) == 0 || i == 20)
+				n_l++;
+		}
+		else if (str[i] != '.')
+			return (FT_FALSE);
+		i++;
+	}
+	if (h_tag == 4 && (n_l == 5 || n_l == 4))
+		return (FT_TRUE);
+	return (FT_FALSE);
 }
 
 int	parse(int fd, t_tet *tetris)
