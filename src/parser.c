@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/13 18:21:04 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:47:52 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ static int	tet_allowed(t_tet shape)
 {
 	t_uint			index;
 	const uint64_t	v_tetris[19] = {
-		// we can simply put macros here, as defined in the header
+		I_PIECE, IH_PIECE, O_PIECE,
+		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
+		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
+		T_PIECE, TCW_PIECE, TCCW_PIECE, TUD_PIECE,
+		S_PIECE, SCW_PIECE, SCCW_PIECE, Z_PIECE
 	};
 
 	index = -1U;
@@ -31,24 +35,31 @@ static int	tet_allowed(t_tet shape)
 /* it should be noted that atm this function will set the bits in
 ** reverse order the top-left corner being represented by the rightmost bit.
 */
-static t_tet	to_bitstr64(const char *buf, ssize_t r_len)
+static t_tet	to_bitstr64(const char *buf, ssize_t len)
 {
 	t_tet	ret;
 	t_uint	i;
+	t_bool	is_b;
 
 	ret = (t_tet){0x0};
 	i = -1U;
-	while (++i < r_len)
+	while (++i < len)
 	{
 		if (buf[i] == '#')
-			ret.bits = (1 << i) | ret.bits;
+			break ;
+	}
+	i--;
+	while (++i < len)
+	{
+		is_b = buf[i] == '#';
+		ret.bits |= (uint64_t)(is_b << i);//FIXME: needs to take NLs into account!
 	}
 	return (ret);
 }
 
 static int	check_connections(char *str)
 {
-	int i;
+	int	i;
 	int	links;
 
 	i = 0;
@@ -108,7 +119,7 @@ int	parse(int fd, t_tet *tetris)
 	{
 		tet_c++;
 		r_len = read(fd, buf, BUFF_SIZE);
-		if (r_len < BUFF_SIZE - 1 || tet_c > 26)
+		if (r_len < BUFF_SIZE - 1 || tet_c > MAX_TETRIS)
 			return (XC_ERROR);
 		buf[r_len] = 0;
 		if (!check_format(buf) || !check_connections(buf))
