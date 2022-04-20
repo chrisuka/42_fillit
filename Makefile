@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/04/13 18:48:20 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/04/20 17:50:35 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBS		= $(addprefix lib,$(addsuffix .a,$(LIB)))
 CMD_INC		= $(addprefix -I ,$(INC_DIR))
 
 CFLAGS		= -Wall -Wextra -Werror
-DEBUG_FLAGS	= -Wimplicit -Wconversion -g -fsanitize=address -fsanitize=memory
+DEBUG_FLAGS	= -Wimplicit -Wconversion -g -fsanitize=address
 CC			= clang
 
 ##	BUILD ====
@@ -47,16 +47,16 @@ endif
 install: re clean
 debug:
 	@echo	$(BMSG_DBG)
-	$(CC) -c $(CFLAGS) $(DEBUG) $(SRC) $(CMD_INC)
-	$(CC) -o $(BIN) $(OBJ) -L$(LIB_DIR) -l $(LIB)
+	$(CC) -o $(BIN) $(CFLAGS) $(DEBUG_FLAGS) $(SRC) $(CMD_INC) \
+		-L$(LIB_DIR) -l $(LIB)
 	@echo	$(BMSG_FIN)
 
 ##	CLEAN ====
 clean:
 	rm -f $(OBJ)
+	make -C $(LIB_DIR)	clean
 fclean: clean
-	rm -f $(BIN) $(LIB)
-	rm -f libft.so
+	rm -f $(BIN)
 lclean: clean
 	make -C $(LIB_DIR)	fclean
 re: fclean all

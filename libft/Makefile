@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/04/05 19:08:59 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/04/20 15:31:47 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME	= libft.a
 BIN		= ./$(NAME)
 
 FUNC_P12	= \
-ft_putstr ft_putstr_fd ft_putendl ft_putendl_fd \
-ft_strlen
+ft_putchar ft_putchar_fd ft_putstr ft_putstr_fd ft_putendl ft_putendl_fd \
+ft_strlen ft_memalloc ft_bzero ft_memset
 
 FUNC_BONUS	= \
 
