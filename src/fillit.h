@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/20 17:33:09 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/21 12:00:28 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ typedef struct s_tetrimino
 # define JUD_PIECE	0b0000000100010011
 
 # define T_PIECE	0b0000000000100111
-# define TUD_PIECE	0b0000000000111001
-# define TCCW_PIECE	0b0000000100110001
 # define TCW_PIECE	0b0000000100011001
+# define TCCW_PIECE	0b0000000100110001
+# define TUD_PIECE	0b0000000000111001
 
 # define Z_PIECE	0b0000000001100011
 # define S_PIECE	0b0000000000011011

@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:01:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/20 17:47:52 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/21 12:46:05by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,22 @@ static int	tet_allowed(t_tet shape)
 /* it should be noted that atm this function will set the bits in
 ** reverse order the top-left corner being represented by the rightmost bit.
 */
-static t_tet	to_bitstr64(const char *buf, ssize_t len)
+static t_tet	to_bitstr64(const char *buf)
 {
 	t_tet	ret;
 	t_uint	i;
 	t_bool	is_b;
 
 	ret = (t_tet){0x0};
-	i = -1U;
-	while (++i < len)
+	while (*buf != '#' && *buf)
+		buf++;
+	i = 0;
+	while (*buf)
 	{
-		if (buf[i] == '#')
-			break ;
-	}
-	i--;
-	while (++i < len)
-	{
-		is_b = buf[i] == '#';
-		ret.bits |= (uint64_t)(is_b << i);//FIXME: needs to take NLs into account!
+		is_b = (*buf == '#');
+		ret.bits |= (uint64_t)(is_b << i);
+		i += (*buf != '\n');
+		buf++;
 	}
 	return (ret);
 }
@@ -119,12 +117,14 @@ int	parse(int fd, t_tet *tetris)
 	{
 		tet_c++;
 		r_len = read(fd, buf, BUFF_SIZE);
-		if (r_len < BUFF_SIZE - 1 || tet_c > MAX_TETRIS)
+		if (r_len == 0)
+			break ;
+		if (tet_c > MAX_TETRIS || r_len < BUFF_SIZE - 1)
 			return (XC_ERROR);
 		buf[r_len] = 0;
 		if (!check_format(buf) || !check_connections(buf))
 			return (XC_ERROR);
-		tetris[tet_c] = to_bitstr64(buf, r_len);
+		tetris[tet_c] = to_bitstr64(buf);
 		if (!tet_allowed(tetris[tet_c]))
 			return (XC_ERROR);
 	}
