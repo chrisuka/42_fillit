@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/21 12:00:28 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:57:31 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ typedef struct s_tetrimino
 # define SCCW_PIECE	0b0000000010011001
 
 /* PRINTER */
-int		display_error(void);
-int		display_usage(void);
+int	display_error(void);
+int	display_usage(void);
 
 /* PARSER */
-int		parse(int fd, t_tet *tetris);
+int	parse(int fd, t_tet *tetris);
+
+/* SOLVER */
+int	solve(t_m4x16 *map, t_tet *tetris);
 
 #endif
