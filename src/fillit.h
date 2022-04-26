@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/21 18:57:31 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/25 20:04:05 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ typedef unsigned long long	t_m4x16;
 typedef struct s_tetrimino
 {
 	uint64_t	bits;
+	char		legend;
+	t_uint		x;
+	t_uint		y;
+	t_uint		w;
+	t_uint		h;
 }	t_tet;
 
 /* TETRIMINO CODES */

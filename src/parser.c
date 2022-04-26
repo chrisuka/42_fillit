@@ -32,9 +32,8 @@ static int	tet_allowed(t_tet shape)
 	return (FT_FALSE);
 }
 
-/* it should be noted that atm this function will set the bits in
-** reverse order the top-left corner being represented by the rightmost bit.
-*/
+/* it should be noted that atm this function will set the bits in reverse
+** the top-left corner being represented by the rightmost bit. */
 static t_tet	to_bitstr64(const char *buf)
 {
 	t_tet	ret;
@@ -53,6 +52,8 @@ static t_tet	to_bitstr64(const char *buf)
 		buf++;
 	}
 	return (ret);
+	// TODO: need to account for shapes that shouldn't begin with 1
+	// TODO: need to make a func for setting up a tetrimino with legend and bounds
 }
 
 static int	check_connections(char *str)

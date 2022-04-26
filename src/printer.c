@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:26:23 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/08 11:55:53 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:47:28 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	display_error(void)
 
 int	display_usage(void)
 {
-	const char	*msg = "usage: fillit tetrimino_file";
+	const char	*msg = "usage: fillit <tetrimino_file>";
 
 	ft_putendl_fd(msg, FD_OUT);
 	return (XC_EXIT);
