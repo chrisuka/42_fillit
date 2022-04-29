@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 14:01:04 by staskine          #+#    #+#             */
-/*   Updated: 2022/04/11 14:42:55 by staskine         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:24:50 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,18 @@ int	ft_sqrt(int number)
 	while ((variable * variable) < number)
 		variable++;
 	return (variable);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }

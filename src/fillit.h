@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/25 20:04:05 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/04/29 19:46:24 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,19 @@
 # define MAX_TETRIS	26
 # define BUFF_SIZE	21
 
-typedef unsigned long long	t_m4x16;
+typedef uint64_t	t_m4x16;
 typedef struct s_tetrimino
 {
 	uint64_t	bits;
 	char		legend;
-	t_uint		x;
-	t_uint		y;
-	t_uint		w;
-	t_uint		h;
+	uint8_t		w;
+	uint8_t		h;
 }	t_tet;
 
 /* TETRIMINO CODES */
-# define I_PIECE	0b0001000100010001
+# define I_PIECE	0b0000000000000001000000000000000100000000000000010000000000000001U
 # define IH_PIECE	0b0000000000001111
-# define O_PIECE	0b0000000000110011
+# define O_PIECE	0b0000000000110000000000000011
 
 # define L_PIECE	0b0000001100010001
 # define LCW_PIECE	0b0000000000010111
@@ -58,10 +56,10 @@ typedef struct s_tetrimino
 # define TCCW_PIECE	0b0000000100110001
 # define TUD_PIECE	0b0000000000111001
 
-# define Z_PIECE	0b0000000001100011
 # define S_PIECE	0b0000000000011011
 # define SCW_PIECE	0b0000001000110001
-# define SCCW_PIECE	0b0000000010011001
+# define Z_PIECE	0b0000000001100011
+# define ZCW_PIECE	0b0000000010011001
 
 /* PRINTER */
 int	display_error(void);
@@ -71,6 +69,10 @@ int	display_usage(void);
 int	parse(int fd, t_tet *tetris);
 
 /* SOLVER */
-int	solve(t_m4x16 *map, t_tet *tetris);
+int	solve(t_m4x16 *map, t_tet *tetris, t_uint size);
+
+/* MATH */
+int	ft_min(int a, int b);
+int	ft_max(int a, int b);
 
 #endif
