@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/29 19:46:24 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:12:29 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,29 @@ typedef struct s_tetrimino
 }	t_tet;
 
 /* TETRIMINO CODES */
-# define I_PIECE	0b0000000000000001000000000000000100000000000000010000000000000001U
-# define IH_PIECE	0b0000000000001111
-# define O_PIECE	0b0000000000110000000000000011
+# define I_PIECE	65537ULL
+# define IH_PIECE	15ULL
+# define O_PIECE	196611ULL
 
-# define L_PIECE	0b0000001100010001
-# define LCW_PIECE	0b0000000000010111
-# define LCCW_PIECE	0b0000000000011101
-# define LUD_PIECE	0b0000001000100011
+# define L_PIECE	65539ULL
+# define LCW_PIECE	65543ULL
+# define LCCW_PIECE	458756ULL
+# define LUD_PIECE	131075ULL
 
-# define J_PIECE	0b0000000110010001
-# define JCW_PIECE	0b0000000001110001
-# define JCCW_PIECE	0b0000000001000111
-# define JUD_PIECE	0b0000000100010011
+# define J_PIECE	131075ULL
+# define JCW_PIECE	458753ULL
+# define JCCW_PIECE	262151ULL
+# define JUD_PIECE	65539ULL
 
-# define T_PIECE	0b0000000000100111
-# define TCW_PIECE	0b0000000100011001
-# define TCCW_PIECE	0b0000000100110001
-# define TUD_PIECE	0b0000000000111001
+# define T_PIECE	131079ULL
+# define TCW_PIECE	196609ULL
+# define TCCW_PIECE	196610ULL
+# define TUD_PIECE	458754ULL
 
-# define S_PIECE	0b0000000000011011
-# define SCW_PIECE	0b0000001000110001
-# define Z_PIECE	0b0000000001100011
-# define ZCW_PIECE	0b0000000010011001
+# define S_PIECE	196614ULL
+# define SCW_PIECE	196611ULL
+# define Z_PIECE	393219ULL
+# define ZCW_PIECE	196611ULL
 
 /* PRINTER */
 int	display_error(void);
