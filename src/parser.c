@@ -22,7 +22,7 @@ static int	tet_allowed(t_tet shape)
 		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
 		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
 		T_PIECE, TCW_PIECE, TCCW_PIECE, TUD_PIECE,
-		S_PIECE, SCW_PIECE, SCCW_PIECE, Z_PIECE
+		S_PIECE, SCW_PIECE, ZCW_PIECE, Z_PIECE
 	};
 
 	index = -1U;
@@ -44,61 +44,44 @@ static	uint64_t	tr_bitstr64(uint8_t *idxs, uint8_t n)
 	uint8_t		x;
 
 	bits = 0x0;
-	xoffset = idxs[0] % 5;
+	xoffset = 5;
 	while (n-- > 0)
 	{
 		x = idxs[n] % 5;
-		printf("%u-%u ", xoffset, (x < xoffset) * x); //DEBUG====================
-		xoffset -= ((x < xoffset) * x);//FIXME: should only subtract up to once per row!
+		xoffset = ft_min(x, xoffset);
 		toggle_index = (idxs[n] / 5) * 16 + x;
 		bits |= (uint64_t)(1 << toggle_index);
 	}
-	printf("\n");//DEBUG====================================
+	xoffset = (idxs[0] % 5) - xoffset;
 	bits >>= (idxs[0] - xoffset);
 	return (bits);
 }
 
-//		DEPRECATED		//
-#if 0
-static t_tet	to_bitstr64(const char *buf)
-{
-	t_tet	ret;
-	t_uint	i;
-	t_bool	is_b;
-
-	ret = (t_tet){0x0};
-	while (*buf != '#' && *buf)
-		buf++;
-	i = 0;
-	while (*buf)
-	{
-		ret.bits |= (uint64_t)(is_b << i);
-		i += (*buf != '\n');
-		buf++;
-	}
-	return (ret);
-}
-#endif
-
-// NEW CONTENDER (NOT FUNCTIONAL ATM)
-#if 0
+// NEW CONTENDER
+#if 1
 static int	check_connections(uint8_t *blocks, uint8_t n)
 {
 	uint8_t	gap;
 	uint8_t	links;
+	uint8_t	j;
 
 	links = 0;
 	while (n-- > 1)
 	{
-		gap = blocks[n] - blocks[n - 1];
-		links += (gap == 1 || gap == 5);
+		j = n;
+		while (j-- > 0)
+		{
+			gap = blocks[n] - blocks[j];
+			links += (gap == 1 || gap == 5);
+		}
 	}
+	printf ("\n%u links", links);
 	return (links >= 3);
 }
 #endif
 
 //		DEPRECATED (?)		//
-#if 1
+#if 0
 static int	check_connections(char *str)
 {
 	int	i;
@@ -222,10 +205,10 @@ int	parse(int fd, t_tet *tetris)
 
 int main(void)
 {
-	int ret;
-	char buf[22];
-	int fd;
-	uint8_t	idxs[4];
+	int			ret;
+	char		buf[22];
+	int			fd;
+	uint8_t		idxs[4];
 	u_int8_t	w, h;
 	u_int64_t	bits;
 
@@ -238,18 +221,22 @@ int main(void)
 		for (int i = 0; i < 4; i++)
 			printf("%i ", idxs[i]);
 		get_bounds(idxs, 4, &w, &h);
-		printf("\n(%i, %i)\n", w, h);
+		printf("\n(%i, %i)", w, h);
 
 		bits = tr_bitstr64(idxs, 4);
-		printf("%X", bits);
+		printf("\n%llu", bits);
 
 		t_tet mytet = (t_tet){bits};
 		//if (check_connections(idxs, 4);
-		if (check_connections(buf))
+		if (check_connections(idxs, 4) && tet_allowed(mytet))
 			printf("\n%s", buf);
+		else
+			printf("\ninvalid");
 		ret = read(fd, buf, 21);
 	}
 	printf("\n");
 	close(fd);
 	return (0);
 }
+
+// TODO: make sure hex values are correct, update macros!
