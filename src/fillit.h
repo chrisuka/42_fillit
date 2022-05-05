@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/04 17:12:29 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:48:27 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	display_usage(void);
 int	parse(int fd, t_tet *tetris);
 
 /* SOLVER */
-int	solve(t_m4x16 *map, t_tet *tetris, t_uint size);
+int	solve(uint16_t *map, t_tet *tetris, uint8_t size);
 
 /* MATH */
 int	ft_min(int a, int b);

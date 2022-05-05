@@ -36,7 +36,7 @@ static int	tet_allowed(t_tet shape)
 
 /* it should be noted that atm this function will set the bits in reverse
 ** the top-left corner being represented by the rightmost bit. */
-static	uint64_t	tr_bitstr64(uint8_t *idxs, uint8_t n)
+static	uint64_t	tr_bitstr64(uint8_t *atoms, uint8_t n)
 {
 	uint64_t	bits;
 	uint8_t		toggle_index;
@@ -47,19 +47,19 @@ static	uint64_t	tr_bitstr64(uint8_t *idxs, uint8_t n)
 	xoffset = 5;
 	while (n-- > 0)
 	{
-		x = idxs[n] % 5;
+		x = atoms[n] % 5;
 		xoffset = ft_min(x, xoffset);
-		toggle_index = (idxs[n] / 5) * 16 + x;
+		toggle_index = (atoms[n] / 5) * 16 + x;
 		bits |= (uint64_t)(1 << toggle_index);
 	}
-	xoffset = (idxs[0] % 5) - xoffset;
-	bits >>= (idxs[0] - xoffset);
+	xoffset = (atoms[0] % 5) - xoffset;
+	bits >>= (atoms[0] - xoffset);
 	return (bits);
 }
 
 // NEW CONTENDER
 #if 1
-static int	check_connections(uint8_t *blocks, uint8_t n)
+static int	check_connections(uint8_t *atoms, uint8_t n)
 {
 	uint8_t	gap;
 	uint8_t	links;
@@ -71,11 +71,10 @@ static int	check_connections(uint8_t *blocks, uint8_t n)
 		j = n;
 		while (j-- > 0)
 		{
-			gap = blocks[n] - blocks[j];
+			gap = atoms[n] - atoms[j];
 			links += (gap == 1 || gap == 5);
 		}
 	}
-	printf ("\n%u links", links);
 	return (links >= 3);
 }
 #endif
@@ -106,7 +105,7 @@ static int	check_connections(char *str)
 }
 #endif
 
-static void	get_bounds(uint8_t *idxs, uint8_t n,
+static void	get_bounds(uint8_t *atoms, uint8_t n,
 	uint8_t *w_out, uint8_t *h_out)
 {
 	uint8_t		xmin;
@@ -115,17 +114,17 @@ static void	get_bounds(uint8_t *idxs, uint8_t n,
 
 	xmin = 4;
 	xmax = 0;
-	ymax = (idxs[n - 1] / 5);
+	ymax = (atoms[n - 1] / 5);
 	while (n-- > 0)
 	{
-		xmax = (uint8_t)ft_max(xmax, idxs[n] % 5);
-		xmin = (uint8_t)ft_min(xmin, idxs[n] % 5);
+		xmax = (uint8_t)ft_max(xmax, atoms[n] % 5);
+		xmin = (uint8_t)ft_min(xmin, atoms[n] % 5);
 	}
 	*w_out = (xmax - xmin + 1);
-	*h_out = (ymax - ((idxs[0] / 5)) + 1);
+	*h_out = (ymax - ((atoms[0] / 5)) + 1);
 }
 
-static void	get_block_idxs(char *buf, uint8_t *idxsout)
+static void	get_block_indices(char *buf, uint8_t *o_indices)
 {
 	uint8_t	a_i;
 	uint8_t	buf_i;
@@ -135,64 +134,65 @@ static void	get_block_idxs(char *buf, uint8_t *idxsout)
 	while (buf[++buf_i])
 	{
 		if (buf[buf_i] == '#')
-			idxsout[a_i++] = buf_i;
+			o_indices[a_i++] = buf_i;
 	}
 }
 
 static int	check_format(char *str)
 {
 	int	i;
-	int	h_tag;
-	int	n_l;
+	int	atom_c;
+	int	nl_c;
 
 	i = 0;
-	h_tag = 0;
-	n_l = 0;
+	atom_c = 0;
+	nl_c = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '#')
-			h_tag++;
+			atom_c++;
 		else if (str[i] == '\n')
 		{
 			if (((i + 1) % 5) == 0 || i == 20)
-				n_l++;
+				nl_c++;
 		}
 		else if (str[i] != '.')
 			return (FT_FALSE);
 		i++;
 	}
-	if (h_tag == 4 && (n_l == 5 || n_l == 4))
+	if (atom_c == 4 && (nl_c == 5 || nl_c == 4))
 		return (FT_TRUE);
 	return (FT_FALSE);
 }
 
-#if 0
+// Absolutely disgusting but works
+static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
+{
+	*o_len = read(fd, buf, BUFF_SIZE);
+	return (*o_len);
+}
+
+#if 1
 int	parse(int fd, t_tet *tetris)
 {
 	char	buf[BUFF_SIZE + 1];
-	uint8_t	tb_ixs[4];
+	uint8_t	atoms[4];
 	ssize_t	r_len;
 	t_uint	tet_i;
 
-	tet_i = 0;
-	r_len = 1;
-	// TODO: cleanup
-	while (r_len > 0)
+	tet_i = -1U;
+	while (read_equ(fd, buf, &r_len))
 	{
-		r_len = read(fd, buf, BUFF_SIZE);
-		if (r_len == 0)
-			break ;
-		if (tet_i >= MAX_TETRIS || r_len < BUFF_SIZE - 1)
+		if (++tet_i >= MAX_TETRIS || r_len < BUFF_SIZE - 1)
 			return (XC_ERROR);
 		buf[r_len] = 0;
-		get_block_idxs(buf, tb_ixs);
-		if (!check_format(buf) || !check_connections(tb_ixs, 4))
+		get_block_indices(buf, atoms);
+		if (!check_format(buf) || !check_connections(atoms, 4))
 			return (XC_ERROR);
-		tetris[tet_i] = (t_tet){tr_bitstr64(tb_ixs, 4),
-			('A' + tet_i), (uint16_t)get_bounds(tb_ixs, 4)};
+		tetris[tet_i] = (t_tet){tr_bitstr64(atoms, 4), ('A' + tet_i), 0, 0};
 		if (!tet_allowed(tetris[tet_i]))
 			return (XC_ERROR);
-		tet_i++;
+		get_bounds(atoms, 4, &tetris[tet_i].w, &tetris[tet_i].h);
 	}
 	return (XC_EXIT);
 }
@@ -202,13 +202,13 @@ int	parse(int fd, t_tet *tetris)
 
 
 
-
+#if 0
 int main(void)
 {
 	int			ret;
 	char		buf[22];
 	int			fd;
-	uint8_t		idxs[4];
+	uint8_t		atoms[4];
 	u_int8_t	w, h;
 	u_int64_t	bits;
 
@@ -217,18 +217,18 @@ int main(void)
 	while (ret > 0)
 	{
 		buf[ret] = '\0';
-		get_block_idxs(buf, idxs);
+		get_block_indices(buf, atoms);
 		for (int i = 0; i < 4; i++)
-			printf("%i ", idxs[i]);
-		get_bounds(idxs, 4, &w, &h);
+			printf("%i ", atoms[i]);
+		get_bounds(atoms, 4, &w, &h);
 		printf("\n(%i, %i)", w, h);
 
-		bits = tr_bitstr64(idxs, 4);
+		bits = tr_bitstr64(atoms, 4);
 		printf("\n%llu", bits);
 
 		t_tet mytet = (t_tet){bits};
 		//if (check_connections(idxs, 4);
-		if (check_connections(idxs, 4) && tet_allowed(mytet))
+		if (check_connections(atoms, 4) && tet_allowed(mytet))
 			printf("\n%s", buf);
 		else
 			printf("\ninvalid");
@@ -238,5 +238,6 @@ int main(void)
 	close(fd);
 	return (0);
 }
+#endif
 
 // TODO: make sure hex values are correct, update macros!
