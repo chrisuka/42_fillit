@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 19:05:20 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 17:27:16 by ikarjala         ###   ########.fr       */
+/*   Created: 2022/03/25 17:06:28 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/03/25 19:04:57 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_pow(int n, int pow)
 {
-	int		pow;
-	int		div;
-	char	c;
-	t_bool	ltz;
+	int	base;
 
-	ltz = n < 0;
-	write(fd, "-", ltz);
-	pow = ft_log10(n);
-	div = ft_pow(10, pow) * (1 | -ltz);
-	while (pow-- >= 0)
-	{
-		c = (char)(n / div % 10 + '0');
-		write(fd, &c, 1);
-		div /= 10;
-	}
+	if (pow <= 0)
+		return (pow == 0);
+	base = n;
+	while (--pow > 0)
+		n *= base;
+	return (n);
 }

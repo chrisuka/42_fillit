@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 19:05:20 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 17:27:16 by ikarjala         ###   ########.fr       */
+/*   Created: 2021/12/15 20:48:14 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/03/29 17:32:14 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+t_uint	ft_abs(int n)
 {
-	int		pow;
-	int		div;
-	char	c;
-	t_bool	ltz;
+	int	mask;
 
-	ltz = n < 0;
-	write(fd, "-", ltz);
-	pow = ft_log10(n);
-	div = ft_pow(10, pow) * (1 | -ltz);
-	while (pow-- >= 0)
-	{
-		c = (char)(n / div % 10 + '0');
-		write(fd, &c, 1);
-		div /= 10;
-	}
+	mask = n >> 31;
+	return ((t_uint)((n + mask) ^ mask));
 }
+
+/*
+** bitshifting >> sizeof(n) * CHAR_BIT - 1 will produce
+** 		all 0s or all 1s depending on the signing bit
+** XORing ^ a number with 0 will yield the orig nb
+** XORing it with -1 will yield its inverse
+*/

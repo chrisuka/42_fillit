@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_aiter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 19:05:20 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/09 17:27:16 by ikarjala         ###   ########.fr       */
+/*   Created: 2021/12/17 20:44:25 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/02/15 16:59:58 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_aiter(void **array, size_t len, void (*fn)(void **))
 {
-	int		pow;
-	int		div;
-	char	c;
-	t_bool	ltz;
-
-	ltz = n < 0;
-	write(fd, "-", ltz);
-	pow = ft_log10(n);
-	div = ft_pow(10, pow) * (1 | -ltz);
-	while (pow-- >= 0)
+	while (len-- > 0 && *array)
 	{
-		c = (char)(n / div % 10 + '0');
-		write(fd, &c, 1);
-		div /= 10;
+		fn(array);
+		array++;
 	}
 }
