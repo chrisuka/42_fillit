@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/05 16:48:27 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:01:57 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,15 @@ typedef struct s_tetrimino
 /* PRINTER */
 int	display_error(void);
 int	display_usage(void);
+int	print_grid(uint16_t *map, uint8_t size, t_tet *tetris);
 
 /* PARSER */
 int	parse(int fd, t_tet *tetris);
+
+/* VALIDATOR */
+int	tet_allowed(t_tet shape);
+int	check_connections(uint8_t *atoms, uint8_t n);
+int	check_format(char *buf);
 
 /* SOLVER */
 int	solve(uint16_t *map, t_tet *tetris, uint8_t size);
@@ -74,5 +80,6 @@ int	solve(uint16_t *map, t_tet *tetris, uint8_t size);
 /* MATH */
 int	ft_min(int a, int b);
 int	ft_max(int a, int b);
+int	ft_sqrt(int number);
 
 #endif

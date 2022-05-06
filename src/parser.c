@@ -12,31 +12,9 @@
 
 #include "fillit.h"
 
-#include <stdio.h> //DEBUG===============================================================
-
-static int	tet_allowed(t_tet shape)
-{
-	t_uint			index;
-	const uint64_t	v_tetris[19] = {
-		I_PIECE, IH_PIECE, O_PIECE,
-		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
-		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
-		T_PIECE, TCW_PIECE, TCCW_PIECE, TUD_PIECE,
-		S_PIECE, SCW_PIECE, ZCW_PIECE, Z_PIECE
-	};
-
-	index = -1U;
-	while (++index < 19)
-	{
-		if (shape.bits == v_tetris[index])
-			return (FT_TRUE);
-	}
-	return (FT_FALSE);
-}
-
 /* it should be noted that atm this function will set the bits in reverse
 ** the top-left corner being represented by the rightmost bit. */
-static	uint64_t	tr_bitstr64(uint8_t *atoms, uint8_t n)
+static	uint64_t	to_bitstr64(uint8_t *atoms, uint8_t n)
 {
 	uint64_t	bits;
 	uint8_t		toggle_index;
@@ -56,54 +34,6 @@ static	uint64_t	tr_bitstr64(uint8_t *atoms, uint8_t n)
 	bits >>= (atoms[0] - xoffset);
 	return (bits);
 }
-
-// NEW CONTENDER
-#if 1
-static int	check_connections(uint8_t *atoms, uint8_t n)
-{
-	uint8_t	gap;
-	uint8_t	links;
-	uint8_t	j;
-
-	links = 0;
-	while (n-- > 1)
-	{
-		j = n;
-		while (j-- > 0)
-		{
-			gap = atoms[n] - atoms[j];
-			links += (gap == 1 || gap == 5);
-		}
-	}
-	return (links >= 3);
-}
-#endif
-
-//		DEPRECATED (?)		//
-#if 0
-static int	check_connections(char *str)
-{
-	int	i;
-	int	links;
-
-	i = 0;
-	links = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '#')
-		{
-			if (str[i + 1] == '#')
-				links++;
-			if (str[i + 5] == '#')
-				links++;
-		}
-		i++;
-	}
-	if (links < 3)
-		return (FT_FALSE);
-	return (FT_TRUE);
-}
-#endif
 
 static void	get_bounds(uint8_t *atoms, uint8_t n,
 	uint8_t *w_out, uint8_t *h_out)
@@ -138,33 +68,6 @@ static void	get_block_indices(char *buf, uint8_t *o_indices)
 	}
 }
 
-static int	check_format(char *str)
-{
-	int	i;
-	int	atom_c;
-	int	nl_c;
-
-	i = 0;
-	atom_c = 0;
-	nl_c = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '#')
-			atom_c++;
-		else if (str[i] == '\n')
-		{
-			if (((i + 1) % 5) == 0 || i == 20)
-				nl_c++;
-		}
-		else if (str[i] != '.')
-			return (FT_FALSE);
-		i++;
-	}
-	if (atom_c == 4 && (nl_c == 5 || nl_c == 4))
-		return (FT_TRUE);
-	return (FT_FALSE);
-}
-
 // Absolutely disgusting but works
 static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 {
@@ -172,7 +75,6 @@ static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 	return (*o_len);
 }
 
-#if 1
 int	parse(int fd, t_tet *tetris)
 {
 	char	buf[BUFF_SIZE + 1];
@@ -189,20 +91,20 @@ int	parse(int fd, t_tet *tetris)
 		get_block_indices(buf, atoms);
 		if (!check_format(buf) || !check_connections(atoms, 4))
 			return (XC_ERROR);
-		tetris[tet_i] = (t_tet){tr_bitstr64(atoms, 4), ('A' + tet_i), 0, 0};
+		tetris[tet_i] = (t_tet){to_bitstr64(atoms, 4), ('A' + tet_i), 0, 0};
 		if (!tet_allowed(tetris[tet_i]))
 			return (XC_ERROR);
 		get_bounds(atoms, 4, &tetris[tet_i].w, &tetris[tet_i].h);
 	}
 	return (XC_EXIT);
 }
-#endif
 
 
 
 
 
 #if 0
+#include <stdio.h> //DEBUG===============================================================
 int main(void)
 {
 	int			ret;

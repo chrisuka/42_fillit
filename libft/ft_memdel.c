@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.c                                             :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 14:01:04 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/06 15:06:22 by ikarjala         ###   ########.fr       */
+/*   Created: 2021/11/22 18:02:45 by ikarjala          #+#    #+#             */
+/*   Updated: 2021/12/18 19:08:51 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-int	ft_sqrt(int number)
+void	ft_memdel(void **ap)
 {
-	int	root;
-
-	root = 0;
-	while ((root * root) < number)
-		root++;
-	return (root - (root > number));
-}
-
-int	ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-int	ft_max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
+	if (!ap)
+		return ;
+	free(*ap);
+	*ap = NULL;
 }

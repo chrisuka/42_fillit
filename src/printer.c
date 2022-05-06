@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:26:23 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/05 17:51:50 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:08:53 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	print_grid(uint16_t *map, uint8_t size, t_tet *tetris)
 	buf = (char *)malloc(sizeof(char) * sqr + 1);
 	if (!buf)
 		return (XC_ERROR);
-	i = -1U;
-	y = -1U;
+	i = -1;
+	y = -1;
 	while (++y < size)
 	{
-		x = -1U;
+		x = -1;
 		while (++x < size)
 		{
 			buf[++i] = ".#"[((map[y] & (1 << x)) != 0)];
@@ -51,6 +51,7 @@ int	print_grid(uint16_t *map, uint8_t size, t_tet *tetris)
 	}
 	buf[sqr] = '\n';
 	write(FD_OUT, buf, sqr);
-	ft_memdel(&buf);
+	ft_memdel((void **)&buf);
+	tetris = NULL;
 	return (XC_EXIT);
 }

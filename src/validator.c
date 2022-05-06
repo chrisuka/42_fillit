@@ -3,107 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/04/13 14:28:03 by staskine         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:00:43 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-/* this one just counts the  amount of different
-characters and checks for
-invalid ones. I added checking the newline
-positions to this like how we discussed */
+int	tet_allowed(t_tet shape)
+{
+	t_uint			index;
+	const uint64_t	v_tetris[19] = {
+		I_PIECE, IH_PIECE, O_PIECE,
+		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
+		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
+		T_PIECE, TCW_PIECE, TCCW_PIECE, TUD_PIECE,
+		S_PIECE, SCW_PIECE, ZCW_PIECE, Z_PIECE
+	};
 
-static int	input_check(char *str)
+	index = -1U;
+	while (++index < 19)
+	{
+		if (shape.bits == v_tetris[index])
+			return (FT_TRUE);
+	}
+	return (FT_FALSE);
+}
+
+int	check_connections(uint8_t *atoms, uint8_t n)
+{
+	uint8_t	gap;
+	uint8_t	links;
+	uint8_t	j;
+
+	links = 0;
+	while (n-- > 1)
+	{
+		j = n;
+		while (j-- > 0)
+		{
+			gap = atoms[n] - atoms[j];
+			links += (gap == 1 || gap == 5);
+		}
+	}
+	return (links >= 3);
+}
+
+int	check_format(char *buf)
 {
 	int	i;
-	int	h_tag;
-	int	n_l;
+	int	atom_c;
+	int	nl_c;
 
 	i = 0;
-	h_tag = 0;
-	n_l = 0;
-	while (str[i] != '\0')
+	atom_c = 0;
+	nl_c = 0;
+	while (buf[i] != '\0')
 	{
-		if (str[i] == '#')
-			h_tag++;
-		else if (str[i] == '\n')
+		if (buf[i] == '#')
+			atom_c++;
+		else if (buf[i] == '\n')
 		{
 			if (((i + 1) % 5) == 0 || i == 20)
-				n_l++;
+				nl_c++;
 		}
-		else if (str[i] != '.')
-			return (XC_ERROR);
+		else if (buf[i] != '.')
+			return (FT_FALSE);
 		i++;
 	}
-	if (h_tag == 4 && (n_l == 5 || n_l == 4))
-		return (XC_EXIT);
-	return (XC_ERROR);
+	if (atom_c == 4 && (nl_c == 5 || nl_c == 4))
+		return (FT_TRUE);
+	return (FT_FALSE);
 }
-
-/* this is for checking each connection.
-It works with the logic that the three first 
-hashtags need to have another one either next 
-to them or under them for it to be a valid tetrimino*/
-
-static int check_connections(char *str)
-{
-	int i;
-	int	links;
-
-	i = 0;
-	links = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '#')
-		{
-			if (str[i + 1] == '#')
-				links++;
-			if (str[i + 5] == '#')
-				links++;
-		}
-		i++;
-	}
-	if (links < 3)
-		return (XC_ERROR);
-	return (XC_EXIT);
-}
-
-
-/*This main is purely for testing purposes of 
-these two functions :) */
-
-/*
-int main(void)
-{
-	int ret;
-	char buf[22];
-	int result;
-	int fd;
-
-	fd = open("test.txt", O_RDONLY);
-	ret = read(fd, buf, 21);
-	while (ret > 0)
-	{
-		buf[ret] = '\0';
-		printf("\n%s\n", buf);
-		result = input_check(buf);
-		if (result == -1)
-			printf("This is an invalid string\n");
-		else
-		{
-			result = check_connections(buf);
-			if (result == -1)
-				printf("This is an invalid string\n");
-			else
-				printf("This is a valid string\n");
-		}
-		ret = read(fd, buf, 21);
-	}
-	close(fd);
-	return (0);
-}
-*/

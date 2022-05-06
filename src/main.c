@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_tet		tetris[MAX_TETRIS + 1];
-	uint16_t	*map;
+	//uint16_t	*map;
 	int			fd;
 	int			ret;
 

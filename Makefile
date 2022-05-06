@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/05/05 15:55:34 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/05/06 15:09:56 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= fillit
 BIN		= $(ROOT)$(NAME)
 
 CFUNC	= \
-main parser printer solver math
+main parser validator printer solver math
 
 ROOT		= ./
 SRC_DIR		= $(ROOT)src/
