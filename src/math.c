@@ -6,15 +6,15 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 14:01:04 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/06 15:06:22 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:10:08 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int	ft_sqrt(int number)
+t_uint	ft_sqrt(t_uint number)
 {
-	int	root;
+	t_uint	root;
 
 	root = 0;
 	while ((root * root) < number)

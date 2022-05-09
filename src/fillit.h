@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/06 15:01:57 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/06 21:13:27 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,49 +37,54 @@ typedef struct s_tetrimino
 }	t_tet;
 
 /* TETRIMINO CODES */
-# define I_PIECE	65537ULL
-# define IH_PIECE	15ULL
-# define O_PIECE	196611ULL
+# define I_PIECE	0x0001000100010001ULL
+# define IH_PIECE	0x000000000000000FULL
+# define O_PIECE	0x0000000000030003ULL
 
-# define L_PIECE	65539ULL
-# define LCW_PIECE	65543ULL
-# define LCCW_PIECE	458756ULL
-# define LUD_PIECE	131075ULL
+# define L_PIECE	0x0000000300010001ULL
+# define LCW_PIECE	0x0000000000010007ULL
+# define LCCW_PIECE	0x0000000000070004ULL
+# define LUD_PIECE	0x0000000200020003ULL
 
-# define J_PIECE	131075ULL
-# define JCW_PIECE	458753ULL
-# define JCCW_PIECE	262151ULL
-# define JUD_PIECE	65539ULL
+# define J_PIECE	0x0000000300020002ULL
+# define JCW_PIECE	0x0000000000070001ULL
+# define JCCW_PIECE	0x0000000000040007ULL
+# define JUD_PIECE	0x0000000100010003ULL
 
-# define T_PIECE	131079ULL
-# define TCW_PIECE	196609ULL
-# define TCCW_PIECE	196610ULL
-# define TUD_PIECE	458754ULL
+# define T_PIECE	0x0000000000020007ULL
+# define TCW_PIECE	0x0000000200030002ULL
+# define TCCW_PIECE	0x0000000100030001ULL
+# define TUD_PIECE	0x0000000000070002ULL
 
-# define S_PIECE	196614ULL
-# define SCW_PIECE	196611ULL
-# define Z_PIECE	393219ULL
-# define ZCW_PIECE	196611ULL
+# define S_PIECE	0x0000000000030006ULL
+# define SCW_PIECE	0x0000000200030001ULL
+# define Z_PIECE	0x0000000000060003ULL
+# define ZCW_PIECE	0x0000000100030002ULL
 
 /* PRINTER */
+
 int	display_error(void);
 int	display_usage(void);
-int	print_grid(uint16_t *map, uint8_t size, t_tet *tetris);
+int	print_grid(uint16_t *map, uint16_t size, t_tet *tetris);
 
 /* PARSER */
-int	parse(int fd, t_tet *tetris);
+
+int	parse(int fd, t_tet *tetris, u_int8_t *tet_count);
 
 /* VALIDATOR */
+
 int	tet_allowed(t_tet shape);
 int	check_connections(uint8_t *atoms, uint8_t n);
 int	check_format(char *buf);
 
 /* SOLVER */
-int	solve(uint16_t *map, t_tet *tetris, uint8_t size);
+
+int	solve(uint16_t *map, t_tet *tetris, uint16_t size);
 
 /* MATH */
+
 int	ft_min(int a, int b);
 int	ft_max(int a, int b);
-int	ft_sqrt(int number);
+t_uint	ft_sqrt(t_uint number);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:26:23 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/06 15:08:53 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:49:52 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,32 @@ int	display_usage(void)
 	return (XC_EXIT);
 }
 
-int	print_grid(uint16_t *map, uint8_t size, t_tet *tetris)
+int	print_grid(uint16_t *map, uint16_t size, t_tet *tetris)
 {
-	char	*buf;
-	uint8_t	sqr;
-	uint8_t	i;
-	uint8_t	x;
-	uint8_t	y;
+	char		*buf;
+	uint16_t	sqr;
+	t_uint		i;
+	t_uint		x;
+	t_uint		y;
 
-	sqr = size * size;
-	buf = (char *)malloc(sizeof(char) * sqr + 1);
+	sqr = size * size + size;
+	buf = (char *)malloc(sizeof(char) * sqr);
 	if (!buf)
 		return (XC_ERROR);
-	i = -1;
-	y = -1;
+	i = -1U;
+	y = -1U;
 	while (++y < size)
 	{
-		x = -1;
+		x = -1U;
 		while (++x < size)
 		{
 			buf[++i] = ".#"[((map[y] & (1 << x)) != 0)];
 			// TODO: needs to print correct tetrimino letter
 		}
+		buf[++i] = '\n';
 	}
-	buf[sqr] = '\n';
 	write(FD_OUT, buf, sqr);
 	ft_memdel((void **)&buf);
-	tetris = NULL;
+	tetris = NULL;//DEBUG
 	return (XC_EXIT);
 }

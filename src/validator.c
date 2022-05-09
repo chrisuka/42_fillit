@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/06 15:00:43 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/06 21:06:01 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	tet_allowed(t_tet shape)
 		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
 		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
 		T_PIECE, TCW_PIECE, TCCW_PIECE, TUD_PIECE,
-		S_PIECE, SCW_PIECE, ZCW_PIECE, Z_PIECE
+		S_PIECE, SCW_PIECE, Z_PIECE, ZCW_PIECE
 	};
 
 	index = -1U;
