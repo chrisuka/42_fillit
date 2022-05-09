@@ -26,9 +26,9 @@ static	uint64_t	to_bitstr64(uint8_t *atoms, uint8_t n)
 	while (n-- > 0)
 	{
 		x = atoms[n] % 5;
-		xoffset = ft_min(x, xoffset);
+		xoffset = (uint8_t)ft_min(x, xoffset);
 		toggle_index = (atoms[n] / 5) * 16 + x;
-		bits |= (uint64_t)(1 << toggle_index);
+		bits |= (uint64_t)(1ULL << toggle_index);
 	}
 	xoffset = (atoms[0] % 5) - xoffset;
 	bits >>= (atoms[0] - xoffset);
@@ -56,15 +56,15 @@ static void	get_bounds(uint8_t *atoms, uint8_t n,
 
 static void	get_block_indices(char *buf, uint8_t *o_indices)
 {
-	uint8_t	a_i;
-	uint8_t	buf_i;
+	t_uint	a_i;
+	t_uint	buf_i;
 
 	a_i = 0;
-	buf_i = (uint8_t)-1U;
+	buf_i = -1U;
 	while (buf[++buf_i])
 	{
 		if (buf[buf_i] == '#')
-			o_indices[a_i++] = buf_i;
+			o_indices[a_i++] = (uint8_t)buf_i;
 	}
 }
 
@@ -72,17 +72,17 @@ static void	get_block_indices(char *buf, uint8_t *o_indices)
 static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 {
 	*o_len = read(fd, buf, BUFF_SIZE);
-	return (*o_len);
+	return (*o_len != 0);
 }
 
-int	parse(int fd, t_tet *tetris)
+int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 {
 	char	buf[BUFF_SIZE + 1];
 	uint8_t	atoms[4];
 	ssize_t	r_len;
-	t_uint	tet_i;
+	uint8_t	tet_i;
 
-	tet_i = -1U;
+	tet_i = (uint8_t)-1;
 	while (read_equ(fd, buf, &r_len))
 	{
 		if (++tet_i >= MAX_TETRIS || r_len < BUFF_SIZE - 1)
@@ -91,20 +91,18 @@ int	parse(int fd, t_tet *tetris)
 		get_block_indices(buf, atoms);
 		if (!check_format(buf) || !check_connections(atoms, 4))
 			return (XC_ERROR);
-		tetris[tet_i] = (t_tet){to_bitstr64(atoms, 4), ('A' + tet_i), 0, 0};
-		if (!tet_allowed(tetris[tet_i]))
-			return (XC_ERROR);
+		tetris[tet_i] = (t_tet){
+			to_bitstr64(atoms, 4), (char)('A' + tet_i), 0, 0};
+/* 		if (!tet_allowed(tetris[tet_i]))
+			return (XC_ERROR); */
 		get_bounds(atoms, 4, &tetris[tet_i].w, &tetris[tet_i].h);
 	}
+	*tet_count = tet_i + 1;
 	return (XC_EXIT);
 }
 
-
-
-
-
 #if 0
-#include <stdio.h> //DEBUG===============================================================
+#include <stdio.h> //DEBUG============================================
 int main(void)
 {
 	int			ret;
@@ -142,4 +140,3 @@ int main(void)
 }
 #endif
 
-// TODO: make sure hex values are correct, update macros!

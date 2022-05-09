@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h> //DEBUG=======================================================
 
-int	solve(uint16_t *map, t_tet *tetris, uint8_t size)
+int	solve(uint16_t *map, t_tet *tetris, uint16_t size)
 {
 	t_m4x16		*m_chunk;
 	uint64_t	bits;
@@ -22,16 +23,19 @@ int	solve(uint16_t *map, t_tet *tetris, uint8_t size)
 	if (!tetris->bits)
 		return (FT_TRUE);
 	y = -1U;
-	while (++y < size)
+	// KEEP IN MIND, WE SHOULD PRECALCULATE THESE X/Y OFFSETS!!
+	while (++y <= (size - tetris->h))
 	{
 		m_chunk = (t_m4x16 *)&map[y];
 		x = -1U;
-		while (++x < size)
+		while (++x <= (size - tetris->w))
 		{
 			bits = (tetris->bits << x);
 			if ((*m_chunk & bits) == 0)
 			{
 				*m_chunk ^= bits;
+				printf("insert (%u,%u)\n", x, y); //DEBUG
+				print_grid(map, size, tetris); //DEBUG
 				if (solve(map, &tetris[1], size))
 					return (FT_TRUE);
 				*m_chunk ^= bits;
@@ -40,3 +44,10 @@ int	solve(uint16_t *map, t_tet *tetris, uint8_t size)
 	}
 	return (FT_FALSE);
 }
+
+// TODO:
+//	PRECALCULATE OFFSETS
+//	MAKE SURE M_CHUNK DOESN'T POINT TO GARBAGE MEMORY
+//		AKA. HAVE SOME SORT OF BOTTOM OFFSET
+
+//	CONSIDER ALLOCATING EXTRA SPACE FOR MAP TO REDUCE REALLOCING
