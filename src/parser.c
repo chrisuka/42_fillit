@@ -31,7 +31,7 @@ static	uint64_t	to_bitstr64(uint8_t *atoms, uint8_t n)
 		bits |= (uint64_t)(1ULL << toggle_index);
 	}
 	xoffset = (atoms[0] % 5) - xoffset;
-	bits >>= (atoms[0] - xoffset);
+	bits >>= (toggle_index - xoffset);
 	return (bits);
 }
 
@@ -112,7 +112,7 @@ int main(void)
 	u_int8_t	w, h;
 	u_int64_t	bits;
 
-	fd = open("eval_tests/t_shapes.txt", O_RDONLY);
+	fd = open("eval_tests/invalid.txt", O_RDONLY);
 	ret = read(fd, buf, 21);
 	while (ret > 0)
 	{
@@ -123,15 +123,16 @@ int main(void)
 		get_bounds(atoms, 4, &w, &h);
 		printf("\n(%i, %i)", w, h);
 
-		bits = tr_bitstr64(atoms, 4);
+		bits = to_bitstr64(atoms, 4);
 		printf("\n%llu", bits);
 
 		t_tet mytet = (t_tet){bits};
 		//if (check_connections(idxs, 4);
-		if (check_connections(atoms, 4) && tet_allowed(mytet))
+		printf("\n%s", buf);
+/* 		if (check_connections(atoms, 4) && tet_allowed(mytet))
 			printf("\n%s", buf);
 		else
-			printf("\ninvalid");
+			printf("\ninvalid"); */
 		ret = read(fd, buf, 21);
 	}
 	printf("\n");

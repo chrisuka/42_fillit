@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 	tetris[tet_c] = (t_tet){0, 0, 0, 0};
 	/* NOTE!! NOT ALL INPUT IS PARSED CORRECTLY! */
 	//DEBUG BEGIN =====================================================================
-	#if 0
+	#if 1
 	fd = -1;
 	while (tetris[++fd].bits != 0)
 	{
