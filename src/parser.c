@@ -35,9 +35,9 @@ static	uint64_t	to_bitstr64(uint8_t *atoms, uint8_t n)
 	return (bits);
 }
 
-static void	get_bounds(uint8_t *atoms, uint8_t n,
-	uint8_t *w_out, uint8_t *h_out)
+static t_point	get_bounds(uint8_t *atoms, uint8_t n)
 {
+	t_point		bounds;
 	uint8_t		xmin;
 	uint8_t		xmax;
 	uint8_t		ymax;
@@ -50,8 +50,9 @@ static void	get_bounds(uint8_t *atoms, uint8_t n,
 		xmax = (uint8_t)ft_max(xmax, atoms[n] % 5);
 		xmin = (uint8_t)ft_min(xmin, atoms[n] % 5);
 	}
-	*w_out = (xmax - xmin + 1);
-	*h_out = (ymax - ((atoms[0] / 5)) + 1);
+	bounds.x = (xmax - xmin + 1);
+	bounds.y = (ymax - ((atoms[0] / 5)) + 1);
+	return (bounds);
 }
 
 static void	get_block_indices(char *buf, uint8_t *o_indices)
@@ -92,10 +93,9 @@ int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 		if (!check_format(buf) || !check_connections(atoms, 4))
 			return (XC_ERROR);
 		tetris[tet_i] = (t_tet){
-			to_bitstr64(atoms, 4), (char)('A' + tet_i), 0, 0};
-/* 		if (!tet_allowed(tetris[tet_i]))
-			return (XC_ERROR); */
-		get_bounds(atoms, 4, &tetris[tet_i].w, &tetris[tet_i].h);
+			to_bitstr64(atoms, 4), get_bounds(atoms, 4), {{0}}};
+		if (!tet_allowed(tetris[tet_i]))
+			return (XC_ERROR);
 	}
 	*tet_count = tet_i + 1;
 	return (XC_EXIT);

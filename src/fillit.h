@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/06 21:13:27 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/10 23:37:02 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@
 # define MAX_TETRIS	26
 # define BUFF_SIZE	21
 
+typedef struct s_tuple
+{
+	uint8_t	x;
+	uint8_t	y;
+}	t_point;
+
+
 typedef uint64_t	t_m4x16;
 typedef struct s_tetrimino
 {
 	uint64_t	bits;
-	char		legend;
-	uint8_t		w;
-	uint8_t		h;
+	t_point		bounds;
+	t_point		atoms[4];
 }	t_tet;
 
 /* TETRIMINO CODES */
@@ -65,7 +71,7 @@ typedef struct s_tetrimino
 
 int	display_error(void);
 int	display_usage(void);
-int	print_grid(uint16_t *map, uint16_t size, t_tet *tetris);
+int	print_grid(uint16_t size, t_tet *tetris);
 
 /* PARSER */
 
@@ -85,6 +91,6 @@ int	solve(uint16_t *map, t_tet *tetris, uint16_t size);
 
 int	ft_min(int a, int b);
 int	ft_max(int a, int b);
-t_uint	ft_sqrt(t_uint number);
+int	ft_sqrt(int number);
 
 #endif

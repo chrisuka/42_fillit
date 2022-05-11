@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:26:23 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/09 12:49:52 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:42:56by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,48 @@ int	display_usage(void)
 	return (XC_EXIT);
 }
 
-int	print_grid(uint16_t *map, uint16_t size, t_tet *tetris)
+static inline void	put_tetris(char *buf, t_tet *tetris, uint16_t grid_size)
+{
+	char		legend;
+	t_uint		atom_c;
+	t_point		pos;
+
+	legend = 'A';
+	while (tetris->bits)
+	{
+		atom_c = 4;
+		while (atom_c-- > 0)
+		{
+			pos = tetris->atoms[atom_c];
+			buf[(uint16_t)(pos.y * grid_size + pos.x)] = legend;
+		}
+		legend++;
+		tetris = &tetris[1];
+	}
+}
+
+int	print_grid(uint16_t size, t_tet *tetris)
 {
 	char		*buf;
 	uint16_t	sqr;
-	t_uint		i;
-	t_uint		x;
-	t_uint		y;
+	uint16_t	i;
 
 	sqr = size * size + size;
 	buf = (char *)malloc(sizeof(char) * sqr);
 	if (!buf)
 		return (XC_ERROR);
-	i = -1U;
-	y = -1U;
-	while (++y < size)
+	ft_memset(buf, '.', sqr);
+	i = size;
+	while (i <= sqr)
 	{
-		x = -1U;
-		while (++x < size)
-		{
-			buf[++i] = ".#"[((map[y] & (1 << x)) != 0)];
-			// TODO: needs to print correct tetrimino letter
-		}
-		buf[++i] = '\n';
+		buf[i] = '\n';
+		i += size + 1;
 	}
+	put_tetris(buf, tetris, size);
 	write(FD_OUT, buf, sqr);
 	ft_memdel((void **)&buf);
-	tetris = NULL;//DEBUG
 	return (XC_EXIT);
 }
+
+// NOTE: WE PROBABLY DONT NEED TO STORE LEGEND
+// TODO: IT NO WORK SO MAKE IT WORK, DUH
