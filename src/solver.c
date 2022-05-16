@@ -13,16 +13,13 @@
 #include "fillit.h"
 #include <stdio.h> //DEBUG=======================================================
 
-static inline void	update_atoms(t_tet *shape, t_point pos)
+// TODO: move this function to math.c
+void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
 {
-	uint8_t	atom_i;
-	t_point	*tpos;
-
-	atom_i = 4;
-	while (atom_i-- > 0)
+	while (n-- > 0)
 	{
-		tpos = &shape->atoms[atom_i];
-		*tpos = (t_point){tpos->x + pos.x, tpos->y + pos.y};
+		*atoms = (t_point){atoms->x + pos.x, atoms->y + pos.y};
+		atoms++;
 	}
 }
 
@@ -32,6 +29,7 @@ static inline t_point	offset_size(t_tet *shape, uint16_t size)
 		(uint8_t)(size - shape->bounds.x),
 		(uint8_t)(size - shape->bounds.y)});
 }
+// WARNING! CAN GO NEGATIVE AND OVERFLOW TO 255 !
 
 int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 {
@@ -44,21 +42,19 @@ int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 		return (FT_TRUE);
 	p = (t_point){(uint8_t)-1, (uint8_t)-1};
 	size = offset_size(tetris, grid_size);
-	while (++p.y <= size.y)
+	while (++p.y <= (int8_t)size.y)
 	{
 		m_chunk = (t_m4x16 *)&map[p.y];
 		p.x = (uint8_t)-1;
-		while (++p.x <= size.x)
+		while (++p.x <= (int8_t)size.x)
 		{
 			bits = (tetris->bits << p.x);
 			if ((*m_chunk & bits) == 0)
 			{
 				*m_chunk ^= bits;
-/*				printf("insert (%u,%u)\n", x, y); //DEBUG
-				print_grid(map, size, tetris); //DEBUG */
 				if (solve(map, &tetris[1], grid_size))
 				{
-					update_atoms(tetris, p);
+					pos2d_translate(tetris->atoms, p, 4);
 					return (FT_TRUE);
 				}
 				*m_chunk ^= bits;
@@ -67,11 +63,3 @@ int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 	}
 	return (FT_FALSE);
 }
-
-// TODO:
-//	PRECALCULATE OFFSETS	----	[CONTENDER AVAILABLE]
-
-//	MAKE SURE M_CHUNK DOESN'T POINT TO GARBAGE MEMORY
-//		AKA. HAVE SOME SORT OF BOTTOM OFFSET
-
-//	CONSIDER ALLOCATING EXTRA SPACE FOR MAP TO REDUCE REALLOCING
