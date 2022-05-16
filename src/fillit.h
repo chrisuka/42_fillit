@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/16 15:36:26 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:30:42 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 # define MAX_TETRIS	26
 # define BUFF_SIZE	21
 
+# define MAP_PADDING 4
+
 typedef struct s_tuple
 {
 	uint8_t	x;
 	uint8_t	y;
 }	t_point;
-
 
 typedef uint64_t	t_m4x16;
 typedef struct s_tetrimino
@@ -86,6 +87,7 @@ int	check_format(char *buf);
 /* SOLVER */
 
 int	solve(uint16_t *map, t_tet *tetris, uint16_t size);
+void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n);
 
 /* MATH */
 

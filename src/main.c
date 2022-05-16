@@ -15,28 +15,32 @@
 
 static void	del_array(uint16_t **map, uint16_t size)
 {
-	ft_memset((void *)*map, 0, size);
+	ft_bzero((void *)*map, size + (size % MAP_PADDING));
 	free(*map);
 	*map = NULL;
 }
 
-// TODO: CLEAR ARRAY IN 4x16 CHUNKS INSTEAD OF 1 ROW AT A TIME
-//	ONLY REALLOC ONCE EVERY 4 SIZE INCREMENTS
 static int	create_grid(u_int16_t **map, u_int16_t size)
 {
+	uint16_t	size_real;
+
 	if (*map)
+	{
+		if (size % MAP_PADDING != 0)
+			return (XC_EXIT);
 		free(*map);
-	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size);
+		printf("realloc at virtual size %u\n", size);//DEBUG
+	}
+	size_real = size + MAP_PADDING;
+	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size_real);
 	if (!*map)
 		return (XC_ERROR);
-	while (size-- > 0)
-		(*map)[size] = 0;
+	ft_bzero(*map, size_real);
 	return (XC_EXIT);
 }
 
 int	main(int argc, char **argv)
 {
-	int			fd;
 	t_tet		tetris[MAX_TETRIS + 1];
 	uint16_t	*map;
 	uint8_t		grid_size;
@@ -44,17 +48,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (display_usage());
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	ft_bzero(tetris, sizeof(tetris));
+	if (parse (open(argv[1], O_RDONLY), tetris, &tet_c) == XC_ERROR)
 		return (display_error());
-	if (parse(fd, tetris, &tet_c) == XC_ERROR)
-	{ // FIX THIS HIDEOUS BUSINESS !
-		close(fd);
-		return (display_error());
-	}
-	close(fd); // SIL VOUS PLAIT, NON
-	tetris[tet_c] = (t_tet){0};
-	/* NOTE!! NOT ALL INPUT IS PARSED CORRECTLY! */
 	//DEBUG BEGIN =====================================================================
 	#if 0
 	fd = -1;
@@ -66,7 +62,7 @@ int	main(int argc, char **argv)
 	return (0);
 	#endif
 	//DEBUG END =====================================================================
-	grid_size = (uint8_t)ft_max(4, ft_sqrt(tet_c * 4));
+	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
 	create_grid(&map, grid_size);
 	printf("attempting with map %ux%u\n", grid_size, grid_size); //DEBUG
 	while (!solve(map, tetris, grid_size))
