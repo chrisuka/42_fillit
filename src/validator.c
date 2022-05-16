@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/06 21:06:01 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:10:06 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	tet_allowed(t_tet shape)
 	return (FT_FALSE);
 }
 
-int	check_connections(uint8_t *atoms, uint8_t n)
+int	check_connections(t_point *atoms, uint8_t n)
 {
-	uint8_t	gap;
+	t_point	gaps;
 	uint8_t	links;
 	uint8_t	j;
 
@@ -44,8 +44,9 @@ int	check_connections(uint8_t *atoms, uint8_t n)
 		j = n;
 		while (j-- > 0)
 		{
-			gap = atoms[n] - atoms[j];
-			links += (gap == 1 || gap == 5);
+			gaps.x = atoms[n].x - atoms[j].x;
+			gaps.y = atoms[n].y - atoms[j].y;
+			links += (gaps.x == 1 || gaps.y == 1);
 		}
 	}
 	return (links >= 3);

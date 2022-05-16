@@ -22,7 +22,7 @@ static inline void	update_atoms(t_tet *shape, t_point pos)
 	while (atom_i-- > 0)
 	{
 		tpos = &shape->atoms[atom_i];
-		pos = (t_point){tpos->x + pos.x, tpos->y + pos.y};
+		*tpos = (t_point){tpos->x + pos.x, tpos->y + pos.y};
 	}
 }
 

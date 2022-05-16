@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/10 23:37:02 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:36:26 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	parse(int fd, t_tet *tetris, u_int8_t *tet_count);
 /* VALIDATOR */
 
 int	tet_allowed(t_tet shape);
-int	check_connections(uint8_t *atoms, uint8_t n);
+int	check_connections(t_point *atoms, uint8_t n);
 int	check_format(char *buf);
 
 /* SOLVER */

@@ -14,48 +14,45 @@
 
 /* it should be noted that atm this function will set the bits in reverse
 ** the top-left corner being represented by the rightmost bit. */
-static	uint64_t	to_bitstr64(uint8_t *atoms, uint8_t n)
+static	uint64_t	to_bitstr64(t_point *atoms, uint8_t n)
 {
 	uint64_t	bits;
 	uint8_t		toggle_index;
 	uint8_t		xoffset;
-	uint8_t		x;
 
 	bits = 0x0;
 	xoffset = 5;
 	while (n-- > 0)
 	{
-		x = atoms[n] % 5;
-		xoffset = (uint8_t)ft_min(x, xoffset);
-		toggle_index = (atoms[n] / 5) * 16 + x;
+		xoffset = (uint8_t)ft_min(atoms[n].x, xoffset);
+		toggle_index = atoms[n].y * 16 + atoms[n].x;
 		bits |= (uint64_t)(1ULL << toggle_index);
 	}
-	xoffset = (atoms[0] % 5) - xoffset;
+	xoffset = atoms[0].x - xoffset;
 	bits >>= (toggle_index - xoffset);
 	return (bits);
 }
 
-static t_point	get_bounds(uint8_t *atoms, uint8_t n)
+static t_point	get_bounds(t_point *atoms, uint8_t n)
 {
 	t_point		bounds;
+	t_point		max;
 	uint8_t		xmin;
-	uint8_t		xmax;
-	uint8_t		ymax;
 
 	xmin = 4;
-	xmax = 0;
-	ymax = (atoms[n - 1] / 5);
+	max.x = 0;
+	max.y = atoms[n - 1].y;
 	while (n-- > 0)
 	{
-		xmax = (uint8_t)ft_max(xmax, atoms[n] % 5);
-		xmin = (uint8_t)ft_min(xmin, atoms[n] % 5);
+		max.x = (uint8_t)ft_max(max.x, atoms[n].x);
+		xmin = (uint8_t)ft_min(xmin, atoms[n].x);
 	}
-	bounds.x = (xmax - xmin + 1);
-	bounds.y = (ymax - ((atoms[0] / 5)) + 1);
+	bounds.x = (max.x - xmin + 1);
+	bounds.y = (max.y - atoms[0].y + 1);
 	return (bounds);
 }
 
-static void	get_block_indices(char *buf, uint8_t *o_indices)
+static void	get_block_indices(char *buf, t_point *o_indices)
 {
 	t_uint	a_i;
 	t_uint	buf_i;
@@ -65,7 +62,7 @@ static void	get_block_indices(char *buf, uint8_t *o_indices)
 	while (buf[++buf_i])
 	{
 		if (buf[buf_i] == '#')
-			o_indices[a_i++] = (uint8_t)buf_i;
+			o_indices[a_i++] = (t_point){buf_i % 5, buf_i / 5};
 	}
 }
 
@@ -76,10 +73,13 @@ static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 	return (*o_len != 0);
 }
 
+// TODO:
+//	CHANGE BLOCK_INDICES TO USE XY TUPLES INSTEAD
+
 int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 {
 	char	buf[BUFF_SIZE + 1];
-	uint8_t	atoms[4];
+	t_point	atoms[4];
 	ssize_t	r_len;
 	uint8_t	tet_i;
 
@@ -94,6 +94,7 @@ int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 			return (XC_ERROR);
 		tetris[tet_i] = (t_tet){
 			to_bitstr64(atoms, 4), get_bounds(atoms, 4), {{0}}};
+		ft_memmove(tetris[tet_i].atoms, atoms, sizeof(atoms));
 		if (!tet_allowed(tetris[tet_i]))
 			return (XC_ERROR);
 	}

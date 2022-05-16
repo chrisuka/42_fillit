@@ -39,7 +39,7 @@ static inline void	put_tetris(char *buf, t_tet *tetris, uint16_t grid_size)
 		while (atom_c-- > 0)
 		{
 			pos = tetris->atoms[atom_c];
-			buf[(uint16_t)(pos.y * grid_size + pos.x)] = legend;
+			buf[(uint16_t)(pos.y * grid_size + pos.x + pos.y)] = legend;
 		}
 		legend++;
 		tetris = &tetris[1];
