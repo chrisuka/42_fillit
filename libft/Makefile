@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/05/06 18:13:14 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/05/16 15:50:58 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ BIN		= ./$(NAME)
 FUNC_P12	= \
 ft_putchar ft_putchar_fd ft_putstr ft_putstr_fd ft_putendl ft_putendl_fd \
 ft_strlen ft_memalloc ft_bzero ft_memset ft_memdel ft_aiter ft_freearray \
-ft_putnbr_fd ft_log10 ft_pow ft_abs
+ft_putnbr_fd ft_log10 ft_pow ft_abs ft_memmove ft_memcpy
 
 FUNC_BONUS	= \
 
