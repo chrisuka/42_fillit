@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h> //DEBUG=======================================================
-
-// TODO: move this function to math.c
-void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
-{
-	while (n-- > 0)
-	{
-		atoms->x += pos.x;
-		atoms->y += pos.y;
-		atoms++;
-	}
-}
 
 static inline t_point	offset_size(t_tet *shape, uint16_t size)
 {
@@ -30,7 +18,6 @@ static inline t_point	offset_size(t_tet *shape, uint16_t size)
 		(uint8_t)(size - shape->bounds.x),
 		(uint8_t)(size - shape->bounds.y)});
 }
-// WARNING! CAN GO NEGATIVE AND OVERFLOW TO 255 !
 
 int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 {

@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/06 16:50:04 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:35:07 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,28 @@ typedef struct s_tetrimino
 
 /* PRINTER */
 
-int	display_error(void);
-int	display_usage(void);
-int	print_grid(uint16_t size, t_tet *tetris);
+int		display_error(void);
+int		display_usage(void);
+int		print_grid(uint16_t size, t_tet *tetris);
 
 /* PARSER */
 
-int	parse(int fd, t_tet *tetris, u_int8_t *tet_count);
-
+int		parse(int fd, t_tet *tetris, u_int8_t *tet_count);
 /* VALIDATOR */
 
-int	tet_allowed(t_tet shape);
-int	check_connections(t_point *atoms, uint8_t n);
-int	check_format(char *buf, t_bool *f_last);
+int		tet_allowed(t_tet shape);
+int		check_connections(t_point *atoms, uint8_t n);
+int		check_format(char *buf, t_bool *f_last);
 
 /* SOLVER */
 
-int	solve(uint16_t *map, t_tet *tetris, uint16_t size);
-void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n);
+int		solve(uint16_t *map, t_tet *tetris, uint16_t size);
 
 /* MATH */
 
-int	ft_min(int a, int b);
-int	ft_max(int a, int b);
-int	ft_sqrt(int number);
+int		ft_min(int a, int b);
+int		ft_max(int a, int b);
+int		ft_sqrt(int number);
+void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n);
 
 #endif
