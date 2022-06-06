@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 17:19:50 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/05/05 15:55:06by ikarjala         ###   ########.fr       */
+/*   Created: 2022/06/06 18:19:14 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/06/06 18:27:22 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	del_array(uint16_t **map, uint16_t size)
 {
-	ft_bzero((void *)*map, size + (size % MAP_PADDING));
+	ft_bzero(*map, size + MAP_PADDING);
 	free(*map);
 	*map = NULL;
 }
@@ -23,14 +23,15 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 {
 	if (*map)
 	{
-/* 		if (size % MAP_PADDING != 0)
-			return (XC_EXIT); */
+		if (size % MAP_PADDING != 0)
+			return (XC_EXIT);
 		free(*map);
 	}
+	size += MAP_PADDING;
 	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size);
 	if (!*map)
 		return (XC_ERROR);
-	ft_bzero(*map, size);
+	ft_bzero(*map, size + MAP_PADDING);
 	return (XC_EXIT);
 }
 
@@ -50,9 +51,7 @@ int	main(int argc, char **argv)
 	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
 	create_grid(&map, grid_size);
 	while (!solve(map, tetris, grid_size))
-	{
 		create_grid(&map, ++grid_size);
-	}
 	print_grid(grid_size, tetris);
 	del_array(&map, grid_size);
 	return (XC_EXIT);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 20:33:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/21 21:17:53by ikarjala         ###   ########.fr       */
+/*   Created: 2022/06/06 18:20:29 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/06/06 18:23:01 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 	if (!tetris->bits)
 		return (FT_TRUE);
 	size = offset_size(tetris, grid_size);
-	p = (t_point){(uint8_t)-1, (uint8_t)-1};
+	p = (t_point){0 - 1, 0 - 1};
 	while (++p.y <= (int8_t)size.y)
 	{
 		m_chunk = (t_m4x16 *)&map[p.y];
-		p.x = (uint8_t)-1;
+		p.x = 0 - 1;
 		while (++p.x <= (int8_t)size.x)
 		{
 			bits = (tetris->bits << p.x);
 			if ((*m_chunk & bits) == 0)
 			{
 				*m_chunk ^= bits;
-				if (solve(map, &tetris[1], grid_size))
+				if (solve(map, tetris + 1, grid_size))
 				{
 					pos2d_translate(tetris->atoms, p, 4);
 					return (FT_TRUE);
