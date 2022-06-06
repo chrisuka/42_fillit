@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/06/06 12:28:32 by staskine         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:51:38 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_connections(t_point *atoms, uint8_t n)
 	return (links >= 3);
 }
 
-int	check_format(char *buf)
+int	check_format(char *buf, t_bool *f_last)
 {
 	int	i;
 	int	atom_c;
@@ -76,7 +76,6 @@ int	check_format(char *buf)
 			return (FT_FALSE);
 		i++;
 	}
-	if (atom_c == 4 && (nl_c == 5 || nl_c == 4))
-		return (FT_TRUE);
-	return (FT_FALSE);
+	*f_last |= nl_c == 4;
+	return (atom_c == 4 && (nl_c == 5 || nl_c == 4));
 }

@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (display_usage());
 	ft_bzero(tetris, sizeof(tetris));
-	if (parse (open(argv[1], O_RDONLY), tetris, &tet_c) == XC_ERROR)
+	if (parse (open(argv[1], O_RDONLY), tetris, &tet_c) == XC_ERROR || !tet_c)
 		return (display_error());
 	//DEBUG BEGIN =====================================================================
 	#if 0

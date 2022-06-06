@@ -72,6 +72,8 @@ static t_point	*get_atoms_coords(char *buf, t_point *atoms)
 static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 {
 	*o_len = read(fd, buf, BUFF_SIZE);
+	if (*o_len > 0)
+		((char *)buf)[*o_len] = 0;
 	return (*o_len != 0);
 }
 
@@ -81,28 +83,26 @@ int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 	t_point	*atoms;
 	ssize_t	r_len;
 	uint8_t	tet_i;
+	t_bool	f_last;
 
+	f_last = FT_FALSE;
 	tet_i = (uint8_t)-1;
 	while (read_equ(fd, buf, &r_len))
 	{
-		if (++tet_i >= MAX_TETRIS || r_len < BUFF_SIZE - 1)
+		if ((f_last || ++tet_i >= MAX_TETRIS || r_len < BUFF_SIZE - 1)
+			|| (!check_format(buf, &f_last) || !check_connections(
+					get_atoms_coords(buf, tetris[tet_i].atoms), 4)))
 			return (XC_ERROR);
-		buf[r_len] = 0;
-		tetris[tet_i] = (t_tet){0};
-		if (!check_format(buf) || !check_connections(
-				get_atoms_coords(buf, tetris[tet_i].atoms), 4))
-			return (XC_ERROR);
-		//ft_putendl("here");//DEBUG
 		atoms = tetris[tet_i].atoms;
 		tetris[tet_i].bits = to_bitstr64(atoms, 4);
 		tetris[tet_i].bounds = get_bounds(atoms, 4);
-		//ft_memmove(tetris[tet_i].atoms, atoms, 4);
-		//printf("hex: %llX\n", tetris[tet_i].bits); //DEBUG
 		if (!tet_allowed(tetris[tet_i]))
 			return (XC_ERROR);
 	}
 	close(fd);
 	*tet_count = tet_i + 1;
+	if (!f_last)
+		return (XC_ERROR);
 	return (XC_EXIT);
 }
 
