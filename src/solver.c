@@ -18,7 +18,8 @@ void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
 {
 	while (n-- > 0)
 	{
-		*atoms = (t_point){atoms->x + pos.x, atoms->y + pos.y};
+		atoms->x += pos.x;
+		atoms->y += pos.y;
 		atoms++;
 	}
 }
@@ -40,8 +41,8 @@ int	solve(uint16_t *map, t_tet *tetris, uint16_t grid_size)
 
 	if (!tetris->bits)
 		return (FT_TRUE);
-	p = (t_point){(uint8_t)-1, (uint8_t)-1};
 	size = offset_size(tetris, grid_size);
+	p = (t_point){(uint8_t)-1, (uint8_t)-1};
 	while (++p.y <= (int8_t)size.y)
 	{
 		m_chunk = (t_m4x16 *)&map[p.y];

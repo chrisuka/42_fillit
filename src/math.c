@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 14:01:04 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/16 20:07:20 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:09:48 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	ft_sqrt(int number)
 {
 	int	root;
 
-	root = 0;
+	root = 2;
 	while ((root * root) < number)
 		root++;
-	return (root - (root * root > number));
+	return (root);
 }
 
 int	ft_min(int a, int b)

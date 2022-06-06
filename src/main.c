@@ -22,20 +22,17 @@ static void	del_array(uint16_t **map, uint16_t size)
 
 static int	create_grid(u_int16_t **map, u_int16_t size)
 {
-	uint16_t	size_real;
-
 	if (*map)
 	{
-		if (size % MAP_PADDING != 0)
-			return (XC_EXIT);
+/* 		if (size % MAP_PADDING != 0)
+			return (XC_EXIT); */
 		free(*map);
 		printf("realloc at virtual size %u\n", size);//DEBUG
 	}
-	size_real = size + MAP_PADDING;
-	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size_real);
+	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size);
 	if (!*map)
 		return (XC_ERROR);
-	ft_bzero(*map, size_real);
+	ft_bzero(*map, size);
 	return (XC_EXIT);
 }
 
@@ -53,15 +50,16 @@ int	main(int argc, char **argv)
 		return (display_error());
 	//DEBUG BEGIN =====================================================================
 	#if 0
-	fd = -1;
-	while (tetris[++fd].bits != 0)
+	while (tet_c-- > 0)
 	{
-		printf("tetris[%i]:\n0x%016llXULL\n", fd, tetris[fd].bits);
-		print_grid((uint16_t *)&tetris[fd].bits, 4, tetris);
+		printf("tetris[%i]:\n0x%016llXULL\n", tet_c, tetris[tet_c].bits);
+		print_grid(4, &tetris[tet_c]);
+		ft_bzero(&tetris[tet_c], sizeof(t_tet));
 	}
 	return (0);
 	#endif
 	//DEBUG END =====================================================================
+	tetris[tet_c].bits = 0ULL;
 	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
 	create_grid(&map, grid_size);
 	printf("attempting with map %ux%u\n", grid_size, grid_size); //DEBUG
