@@ -68,6 +68,3 @@ int	print_grid(uint16_t size, t_tet *tetris)
 	ft_memdel((void **)&buf);
 	return (XC_EXIT);
 }
-
-// NOTE: WE PROBABLY DONT NEED TO STORE LEGEND
-// TODO: IT NO WORK SO MAKE IT WORK, DUH
