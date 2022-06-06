@@ -2,10 +2,9 @@
 !author
 !Makefile
 
-!eval_tests
+!eval_tests/
 !eval_tests/*.test
-!eval_tests/testfiles
-!eval_tests/testfiles/*
+!eval_tests/*.fillit
 
 !src
 !src/*.c

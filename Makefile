@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/05/06 15:09:56 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/06/06 17:06:56 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,7 @@ $(NAME): lib
 	$(CC) -o $(BIN) $(OBJ) -L$(LIB_DIR) -l $(LIB)
 	@echo	$(BMSG_FIN)
 lib:
-ifeq (,$(wildcard $(LIBS)))
-	@echo '\_,-->' $(BMSG_LIB)
-	make -C $(LIB_DIR)	re
-endif
+	make -C $(LIB_DIR)	all
 install: re clean
 debug:
 	@echo	$(BMSG_DBG)
@@ -55,13 +52,13 @@ debug:
 clean:
 	rm -f $(OBJ)
 	make -C $(LIB_DIR)	clean
-fclean: clean
+fclean: clean lclean
 	rm -f $(BIN)
 lclean: clean
 	make -C $(LIB_DIR)	fclean
 re: fclean all
 
-.PHONY: lib clean lclean fclean re install
+.PHONY: clean lclean fclean re install
 BMSG_BIN	= '$(COL_HL)' '$(NAME) :: Starting build...' '$(COL_NUL)'
 BMSG_LIB	= '$(COL_HL)' '$(LIBS) :: Compiling libraries...' '$(COL_NUL)'
 BMSG_FIN	= '$(COL_CS)' '$(NAME) :: Build success!' '$(COL_NUL)'
