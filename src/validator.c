@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/05/16 13:10:06 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:28:32 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	check_format(char *buf)
 		{
 			if (((i + 1) % 5) == 0 || i == 20)
 				nl_c++;
+			else
+				return (FT_FALSE);
 		}
 		else if (buf[i] != '.')
 			return (FT_FALSE);

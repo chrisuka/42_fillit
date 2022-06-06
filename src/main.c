@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h> //DEBUG=======================================================
+//#include <stdio.h> //DEBUG=======================================================
 
 static void	del_array(uint16_t **map, uint16_t size)
 {
@@ -29,7 +29,7 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 		if (size % MAP_PADDING != 0)
 			return (XC_EXIT);
 		free(*map);
-		printf("realloc at virtual size %u\n", size);//DEBUG
+		//printf("realloc at virtual size %u\n", size);//DEBUG
 	}
 	size_real = size + MAP_PADDING;
 	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size_real);
@@ -64,13 +64,13 @@ int	main(int argc, char **argv)
 	//DEBUG END =====================================================================
 	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
 	create_grid(&map, grid_size);
-	printf("attempting with map %ux%u\n", grid_size, grid_size); //DEBUG
+	//printf("attempting with map %ux%u\n", grid_size, grid_size); //DEBUG
 	while (!solve(map, tetris, grid_size))
 	{
 		create_grid(&map, ++grid_size);
-		printf("expand map to %ux%u\n", grid_size, grid_size); //DEBUG
+		//printf("expand map to %ux%u\n", grid_size, grid_size); //DEBUG
 	}
-	printf("final result:\n"); //DEBUG
+	//printf("final result:\n"); //DEBUG
 	print_grid(grid_size, tetris);
 	del_array(&map, grid_size);
 	return (XC_EXIT);
