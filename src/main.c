@@ -6,15 +6,14 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:19:14 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/06 18:27:22 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:51:59by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static void	del_array(uint16_t **map, uint16_t size)
+static void	del_array(uint16_t **map)
 {
-	ft_bzero(*map, size + MAP_PADDING);
 	free(*map);
 	*map = NULL;
 }
@@ -31,7 +30,7 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size);
 	if (!*map)
 		return (XC_ERROR);
-	ft_bzero(*map, size + MAP_PADDING);
+	ft_bzero(*map, size * size);
 	return (XC_EXIT);
 }
 
@@ -53,6 +52,6 @@ int	main(int argc, char **argv)
 	while (!solve(map, tetris, grid_size))
 		create_grid(&map, ++grid_size);
 	print_grid(grid_size, tetris);
-	del_array(&map, grid_size);
+	del_array(&map);
 	return (XC_EXIT);
 }
