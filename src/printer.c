@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:19:51 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 15:28:11 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:13:24 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 int	display_error(void)
 {
-	ft_putendl_fd("error", FD_OUT);
+	const char	msg[] = "error";
+
+	write(FD_OUT, msg, sizeof(msg) - 1);
+	write(FD_OUT, "\n", 1);
 	return (XC_ERROR);
 }
 
 int	display_usage(void)
 {
-	const char	*msg = "usage: fillit <tetrimino_file>";
+	const char	msg[] = "usage: fillit <tetrimino_file>";
 
-	ft_putendl_fd(msg, FD_OUT);
+	write(FD_OUT, msg, sizeof(msg) - 1);
+	write(FD_OUT, "\n", 1);
 	return (XC_EXIT);
 }
 
