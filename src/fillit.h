@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 13:50:05 by staskine         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:28:42 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 # define BUFF_SIZE	21
 
 # define MAP_PADDING 4
+
+/* GLOSSARY
+ * bounds:	width and height of a tetrimino
+ * atoms :	individual blocks of a tetrimino
+ * t_m4x16:	64-bit value representing a 4x16 matrix as individual bits
+ *
+ * NOTE:	bits are RTL
+ * NOTE:	map origin is TopLeft
+*/
 
 typedef struct s_tuple
 {

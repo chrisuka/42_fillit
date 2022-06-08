@@ -5,15 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 18:19:39 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/06 18:19:41 by ikarjala         ###   ########.fr       */
+/*   Created: 2022/06/08 15:52:54 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/06/08 15:52:55 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-/* it should be noted that atm this function will set the bits in reverse
-** the top-left corner being represented by the rightmost bit. */
+/*	convert atom positions to m4x16 bitstring code
+ *	in index -> RTL order
+ *	(top-left corner being represented by the rightmost bit)
+*/
 static	uint64_t	to_bitstr64(t_point *atoms, uint8_t n)
 {
 	uint64_t	bits;
@@ -77,6 +79,13 @@ static inline int	read_equ(int fd, void *buf, ssize_t *o_len)
 	return (*o_len != 0);
 }
 
+/*	loop through file
+ *	check string format (newlines/invalid characters)
+ *	set atom coordinates
+ *	convert tetrimino buffer to bitstring
+ *	calculate tetrimino bounds
+ *	check tetrimino validity (against table)
+*/
 int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 {
 	char	buf[BUFF_SIZE + 1];

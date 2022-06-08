@@ -6,7 +6,7 @@
 #    By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 16:57:32 by ikarjala          #+#    #+#              #
-#    Updated: 2022/06/06 17:06:56 by ikarjala         ###   ########.fr        #
+#    Updated: 2022/06/08 15:59:51 by ikarjala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): lib
 lib:
 	make -C $(LIB_DIR)	all
 install: re clean
-debug:
+debug: lib
 	@echo	$(BMSG_DBG)
 	$(CC) -o $(BIN) $(CFLAGS) $(DEBUG_FLAGS) $(SRC) $(CMD_INC) \
 		-L$(LIB_DIR) -l $(LIB)

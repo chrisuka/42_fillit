@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 18:19:14 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/07 13:51:59by ikarjala         ###   ########.fr       */
+/*   Created: 2022/06/08 15:57:41 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/06/08 15:57:42 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 	return (XC_EXIT);
 }
 
+/*	parse tetriminos from input file
+ *	calculate grid starting size
+ *	call recursive solver
+ *	convert bit map to string and print output
+*/
 int	main(int argc, char **argv)
 {
 	t_tet		tetris[MAX_TETRIS + 1];

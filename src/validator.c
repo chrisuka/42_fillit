@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:02 by staskine          #+#    #+#             */
-/*   Updated: 2022/06/06 16:51:38 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:12:39 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	tet_allowed(t_tet shape)
 {
 	t_uint			index;
-	const uint64_t	v_tetris[19] = {
+	const uint64_t	valid_tetris[19] = {
 		I_PIECE, IH_PIECE, O_PIECE,
 		L_PIECE, LCW_PIECE, LCCW_PIECE, LUD_PIECE,
 		J_PIECE, JCW_PIECE, JCCW_PIECE, JUD_PIECE,
@@ -26,7 +26,7 @@ int	tet_allowed(t_tet shape)
 	index = -1U;
 	while (++index < 19)
 	{
-		if (shape.bits == v_tetris[index])
+		if (shape.bits == valid_tetris[index])
 			return (FT_TRUE);
 	}
 	return (FT_FALSE);
