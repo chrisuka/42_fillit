@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/06 17:35:07 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:50:05 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ int		solve(uint16_t *map, t_tet *tetris, uint16_t size);
 int		ft_min(int a, int b);
 int		ft_max(int a, int b);
 int		ft_sqrt(int number);
-void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n);
+int		pos2d_translate(t_point *atoms, t_point pos, uint8_t n);
 
 #endif

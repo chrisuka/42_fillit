@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: staskine <staskine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 18:19:29 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/06 18:19:30 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:51:22 by staskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_max(int a, int b)
 	return (b);
 }
 
-void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
+int	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
 {
 	while (n-- > 0)
 	{
@@ -44,4 +44,5 @@ void	pos2d_translate(t_point *atoms, t_point pos, uint8_t n)
 		atoms->y += pos.y;
 		atoms++;
 	}
+	return (FT_TRUE);
 }
