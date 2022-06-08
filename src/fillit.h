@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 18:19:57 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 15:28:42 by ikarjala         ###   ########.fr       */
+/*   Created: 2022/06/08 18:45:32 by ikarjala          #+#    #+#             */
+/*   Updated: 2022/06/08 18:47:18 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,15 @@ typedef struct s_tetrimino
 	t_point		atoms[4];
 }	t_tet;
 
-/* TETRIMINO CODES */
+/* TETRIMINO CODES
+ * follows the naming convention:
+ *	first letter represents a direct ASCII representation of the shape
+ * EITHER:
+ *	-> CW  to rotate shape 90 deg clockwise
+ *	-> CCW to rotate shape 90 deg counter-clockwise OR
+ *	-> UD for upside down (rotate 180 deg, NOT mirrored)
+ *	_PIECE suffix to signify a tetrimino ULL code
+*/
 # define I_PIECE	0x0001000100010001ULL
 # define IH_PIECE	0x000000000000000FULL
 # define O_PIECE	0x0000000000030003ULL
@@ -86,6 +94,7 @@ int		print_grid(uint16_t size, t_tet *tetris);
 /* PARSER */
 
 int		parse(int fd, t_tet *tetris, u_int8_t *tet_count);
+
 /* VALIDATOR */
 
 int		tet_allowed(t_tet shape);
