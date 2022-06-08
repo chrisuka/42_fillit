@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:57:41 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 15:57:42 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:44:52 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 		free(*map);
 	}
 	size += MAP_PADDING;
-	*map = (uint16_t *)malloc(sizeof(u_int16_t) * size);
+	*map = (uint16_t *)malloc(sizeof(uint16_t) * size);
 	if (!*map)
 		return (XC_ERROR);
-	ft_bzero(*map, size * size);
+	ft_bzero(*map, sizeof(uint16_t) * size);
 	return (XC_EXIT);
 }
 
