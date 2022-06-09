@@ -1,5 +1,5 @@
 # 42-fillit
-by [ikarjala](github.com/ickarjala) and [staskine](github.com/staskine) @ [Hive Helsinki](www.hive.fi/en/)
+by [ikarjala](https://github.com/ickarjala) and [staskine](https://github.com/staskine) @ [Hive Helsinki](https://www.hive.fi/en/)
 
 This is a school project for the coding school Hive Helsinki.
 The goal of the program is to parse an input file containing ASCII representations of tetriminos (tetris blocks)
