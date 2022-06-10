@@ -29,12 +29,13 @@ where *tetrimino_file* is of format:
 ## Implementation
 Our project uses a recursive solver with 64-bit values to represent tetriminos as well as chunks of the grid;
 each 0 or 1 representing free or occupied space in a given position.
+* the map is an array of 16-bit values each representing one 16-wide row in the grid
+* each tetrimino has a 64-bit code representing how it covers a 4-row area in a map
+* as we iterate the x and y, we can cast one row in the map to a chunk of 4 rows and overlay the tetrimino code over it.
 
 This allows us to more effectively both check (via bitwise operations) whether there is room for a tetrimino in a given position on the grid,
 as well as place it down on the map or remove it.
 ```
-we represent the map as an array of 16 bits representing points of the map
-that are either free (0) or occupied (1)
 we represent the teriminos as 64 bits, which map in memory the same way as 4 rows in the map
 .#..             0010 <
 .#..             0010
