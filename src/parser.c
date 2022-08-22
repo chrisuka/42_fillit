@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:54 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 15:52:55 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/08/22 21:51:21 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	parse(int fd, t_tet *tetris, uint8_t *tet_count)
 		if (!tet_allowed(tetris[tet_i]))
 			return (XC_ERROR);
 	}
-	close(fd);
 	*tet_count = tet_i + 1;
 	if (!f_last)
 		return (XC_ERROR);

@@ -6,12 +6,13 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 17:06:35 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/04/06 17:33:10 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/08/23 00:04:37 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include <stdint.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
