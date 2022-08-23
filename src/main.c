@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:57:41 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/08/23 00:06:02 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/08/23 12:06:06 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 	return (XC_EXIT);
 }
 
-static inline int	parse_tetris(const char *path, t_tet *tetris, uint8_t *tet_c)
+static inline int	parse_tetris(const char *path, t_tet *tetris,
+		uint8_t *tet_cp)
 {
 	int	fd;
 	int	ret;
 
 	fd = open(path, O_RDONLY);
-	ret = parse(fd, tetris, tet_c);
+	ret = parse(fd, tetris, tet_cp);
 	close(fd);
 	return (ret);
 }
@@ -64,6 +65,7 @@ int	main(int argc, char **argv)
 		return (display_error());
 	tetris[tet_c].bits = 0ULL;
 	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
+	map = NULL;
 	create_grid(&map, grid_size);
 	while (!solve(map, tetris, grid_size))
 		create_grid(&map, ++grid_size);
