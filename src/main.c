@@ -6,7 +6,7 @@
 /*   By: ikarjala <ikarjala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:57:41 by ikarjala          #+#    #+#             */
-/*   Updated: 2022/06/08 16:44:52 by ikarjala         ###   ########.fr       */
+/*   Updated: 2022/08/23 12:06:06 by ikarjala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ static int	create_grid(u_int16_t **map, u_int16_t size)
 	return (XC_EXIT);
 }
 
+static inline int	parse_tetris(const char *path, t_tet *tetris,
+		uint8_t *tet_cp)
+{
+	int	fd;
+	int	ret;
+
+	fd = open(path, O_RDONLY);
+	ret = parse(fd, tetris, tet_cp);
+	close(fd);
+	return (ret);
+}
+
 /*	parse tetriminos from input file
  *	calculate grid starting size
  *	call recursive solver
@@ -49,10 +61,11 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (display_usage());
 	ft_bzero(tetris, sizeof(tetris));
-	if (parse (open(argv[1], O_RDONLY), tetris, &tet_c) == XC_ERROR || !tet_c)
+	if (parse_tetris (argv[1], tetris, &tet_c) == XC_ERROR || !tet_c)
 		return (display_error());
 	tetris[tet_c].bits = 0ULL;
 	grid_size = (uint8_t)ft_sqrt(tet_c * 4);
+	map = NULL;
 	create_grid(&map, grid_size);
 	while (!solve(map, tetris, grid_size))
 		create_grid(&map, ++grid_size);
