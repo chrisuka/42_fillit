@@ -1,11 +1,11 @@
-# 42-fillit
-by [ikarjala](https://github.com/ickarjala) and [staskine](https://github.com/staskine) @ [Hive Helsinki](https://www.hive.fi/en/)
+# Fillit
+by [ikarjala](https://github.com/qriskap) and [staskine](https://github.com/staskine) @ [Hive Helsinki](https://www.hive.fi/en/)
 
 This is a school project for the coding school Hive Helsinki.
 The goal of the program is to parse an input file containing ASCII representations of tetriminos (tetris blocks)
 and arrange them to fit inside the smallest possible square.
 
-The version tagged as [old](https://github.com/ickarjala/42-fillit/tree/old) is the first version of the program to pass the project.
+The version tagged [old](https://github.com/ickarjala/42-fillit/tree/old) is the first version of the program to pass evaluations.
 
 ## Installation
 For a normal build just go into the root folder and type
@@ -25,6 +25,8 @@ where *tetrimino_file* is of format:
 * must be one of the classic known tetris shapes
 * multiple tetriminos separated with 1 linebreak, no extra linebreak after last shape
 * no more than 26 tetriminos
+
+See the example files in `eval_tests`.
 
 ## Implementation
 Our project uses a recursive solver with 64-bit values to represent tetriminos as well as chunks of the grid;
@@ -75,4 +77,4 @@ $>
 ```
 As the example shows, when there are multiple ways to fit the tetris into an equal-sized square area,
 we prefer setting the tetris earlier in the queue closer to the top-left, origin of the map.
-order of importance : tetrimino index > y > x
+order of importance: tetrimino index > y > x
